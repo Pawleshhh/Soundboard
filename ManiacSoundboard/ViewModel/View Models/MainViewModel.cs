@@ -18,7 +18,7 @@ namespace ManiacSoundboard.ViewModel
 
         public MainViewModel()
         {
-            SoundboardViewModel = SoundboardViewModelConfiguration.ConfigurationService.GetSoundboardViewModel();
+            SoundboardViewModel = SoundboardViewModelConfiguration.ConfigurationService.GetConfiguredViewModel();
         }
 
         #endregion
@@ -69,24 +69,10 @@ namespace ManiacSoundboard.ViewModel
 
         public void ReadXml(XmlReader reader)
         {
-            try
-            {
-                reader.ReadStartElement();
-                SoundboardViewModel.ReadXml(reader);
-                reader.ReadEndElement();
-            }
-            catch (Exception ex)
-            {
-                var result = AppServices.MessageBoxService.ShowMessageBoxDecision("soundboardData.xml file is not properly written so saved settings and data weren't loaded. Do you want to see the details?", 
-                                                                        "Loading data from file error", MessageBoxButton.YesNo, MessageBoxImage.Error);
-
-                if (result == MessageBoxResult.Yes)
-                    AppServices.MessageBoxService.ShowMessageBox(ex.Message, "Details", MessageBoxImage.Information);
-
-                SoundboardViewModel.Dispose();
-
-                SoundboardViewModel = SoundboardViewModelConfiguration.ConfigurationService.GetConfiguredViewModel();
-            }
+            reader.ReadStartElement();
+            SoundboardViewModel.ReadXml(reader);
+            reader.ReadEndElement();
+            
         }
 
         public void WriteXml(XmlWriter writer)
