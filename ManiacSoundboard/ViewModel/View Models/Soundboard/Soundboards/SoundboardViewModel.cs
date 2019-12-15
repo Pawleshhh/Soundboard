@@ -192,7 +192,7 @@ namespace ManiacSoundboard.ViewModel
         public void AddSoundsByPaths(string[] paths)
         {
             _prevCount = Sounds.Result.Count;
-            WorkOnSoundCollection(_AddSoundsByPathsAsync(Sounds.Result.ToList(), paths));
+            WorkOnSoundCollection(AddSoundsByPathsAsync(Sounds.Result.ToList(), paths));
 
             OnPropertyChanged("Sounds");
         }
@@ -200,7 +200,7 @@ namespace ManiacSoundboard.ViewModel
         public void RemoveSounds(params SoundViewModel[] sounds)
         {
             _prevCount = Sounds.Result.Count;
-            WorkOnSoundCollection(_RemoveSoundsAsync(Sounds.Result.ToList(), sounds));
+            WorkOnSoundCollection(RemoveSoundsAsync(Sounds.Result.ToList(), sounds));
 
             OnPropertyChanged("Sounds");
         }
@@ -209,7 +209,7 @@ namespace ManiacSoundboard.ViewModel
         {
             StopAll();
             _prevCount = Sounds.Result.Count;
-            WorkOnSoundCollection(_ClearAllSoundsAsync(), true);
+            WorkOnSoundCollection(ClearAllSoundsAsync(), true);
             OnPropertyChanged("Sounds");
         }
 
@@ -217,7 +217,7 @@ namespace ManiacSoundboard.ViewModel
         {
             StopAll();
             IsChangingDevice = true;
-            await _ReloadDevicesAsync();
+            await ReloadDevicesAsync();
             IsChangingDevice = false;
             OnPropertyChanged("FirstDevice", "SecondDevice", "AllDevices", "IsFirstDeviceEnabled", "IsSecondDeviceEnabled");
         }
@@ -272,7 +272,7 @@ namespace ManiacSoundboard.ViewModel
 
         #region Private methods
 
-        private Task _ReloadDevicesAsync()
+        protected Task ReloadDevicesAsync()
         {
             return Task.Run(() =>
             {
@@ -280,7 +280,7 @@ namespace ManiacSoundboard.ViewModel
             });
         }
 
-        private void _ReloadDevices()
+        protected void _ReloadDevices()
         {
             _soundboard.AudioDevices.ReloadOutDevices();
 
@@ -293,7 +293,7 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
-        private Task<ObservableCollection<SoundViewModel>> _AddSoundsByPathsAsync(List<SoundViewModel> previous, params string[] paths)
+        protected Task<ObservableCollection<SoundViewModel>> AddSoundsByPathsAsync(List<SoundViewModel> previous, params string[] paths)
         {
             return Task.Run(() =>
             {
@@ -340,7 +340,7 @@ namespace ManiacSoundboard.ViewModel
             });
         }
 
-        private Task<ObservableCollection<SoundViewModel>> _RemoveSoundsAsync(List<SoundViewModel> previous, params SoundViewModel[] sounds)
+        protected Task<ObservableCollection<SoundViewModel>> RemoveSoundsAsync(List<SoundViewModel> previous, params SoundViewModel[] sounds)
         {
             return Task.Run(() =>
             {
@@ -357,23 +357,23 @@ namespace ManiacSoundboard.ViewModel
             });
         }
 
-        private Task<ObservableCollection<SoundViewModel>> _ClearAllSoundsAsync()
+        protected Task<ObservableCollection<SoundViewModel>> ClearAllSoundsAsync()
         {
             return Task.Run(() =>
             {
                 _soundboard.RemoveAllSounds();
-                return _UpdateSounds();
+                return UpdateSounds();
             });
         }
 
-        private ObservableCollection<SoundViewModel> _UpdateSounds()
+        protected ObservableCollection<SoundViewModel> UpdateSounds()
         {
             return new ObservableCollection<SoundViewModel>(_soundboard.AllPlayers.Select(n => GetSoundViewModel(n)));
         }
 
-        private Task<ObservableCollection<SoundViewModel>> _UpdateSoundsAsync()
+        protected Task<ObservableCollection<SoundViewModel>> UpdateSoundsAsync()
         {
-            return Task.Run(() => _UpdateSounds());
+            return Task.Run(() => UpdateSounds());
         }
 
         protected void WorkOnSoundCollection(Task<ObservableCollection<SoundViewModel>> task, bool disposeSounds = false)
