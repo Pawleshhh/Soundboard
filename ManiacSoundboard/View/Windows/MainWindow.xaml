@@ -285,13 +285,13 @@
 
                 <CheckBox x:Name="firstDeviceCheckBox" IsChecked="{Binding IsFirstDeviceEnabled, Mode=TwoWay}">
                     <CheckBox.ToolTip>
-                        Enable first device.
+                        Enable first device
                     </CheckBox.ToolTip>
                 </CheckBox>
 
                 <CheckBox x:Name="secondDeviceCheckBox" Grid.Row="1" IsChecked="{Binding IsSecondDeviceEnabled, Mode=TwoWay}">
                     <CheckBox.ToolTip>
-                        Enable second device.
+                        Enable second device
                     </CheckBox.ToolTip>
                 </CheckBox>
 
