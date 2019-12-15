@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace ManiacSoundboard.Model
 {
-    public class KeyCombination : IEquatable<KeyCombination>, IXmlSerializable
+    public class KeyCombination : IEquatable<KeyCombination>
     {
 
         #region Constructors
@@ -140,35 +140,6 @@ namespace ManiacSoundboard.Model
             if (key == Keys.LShiftKey || key == Keys.RShiftKey) return Keys.Shift;
 
             return key;
-        }
-
-        public XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void ReadXml(XmlReader reader)
-        {
-            reader.ReadStartElement();
-
-            string str = reader.ReadElementContentAsString("KeyCombination", "");
-
-            var parts = str
-                .Split('+')
-                .Select(p => Enum.Parse(typeof(Keys), p))
-                .Cast<Keys>();
-            var stack = new Stack<Keys>(parts);
-            var triggerKey = stack.Pop();
-
-            _modifiers = new HashSet<Keys>(stack);
-            TriggerKey = triggerKey;
-
-            reader.ReadEndElement();
-        }
-
-        public void WriteXml(XmlWriter writer)
-        {
-            writer.WriteElementString("KeyCombination", ToString());
         }
 
         #endregion
