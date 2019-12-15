@@ -282,13 +282,26 @@ namespace ManiacSoundboard.ViewModel
 
         protected void _ReloadDevices()
         {
+            var prevFirstDevice = FirstDevice;
+            var prevSecondDevice = SecondDevice;
+
             _soundboard.AudioDevices.ReloadOutDevices();
 
             AllDevices = new ObservableCollection<IAudioDevice>(_soundboard.AudioDevices.OutDevices);
+
             if (AllDevices.Count >= 1)
             {
-                _soundboard.FirstDevice = AllDevices[0];
-                if (AllDevices.Count >= 2)
+                if (prevFirstDevice != null && AllDevices.Contains(prevFirstDevice))
+                    _soundboard.FirstDevice = AllDevices.Where(n => n.Equals(prevFirstDevice)).Single();
+                else
+                    _soundboard.FirstDevice = AllDevices[0];
+            }
+
+            if (AllDevices.Count >= 2)
+            {
+                if (prevSecondDevice != null && AllDevices.Contains(prevSecondDevice))
+                    _soundboard.SecondDevice = AllDevices.Where(n => n.Equals(prevSecondDevice)).Single();
+                else
                     _soundboard.SecondDevice = AllDevices[1];
             }
         }
