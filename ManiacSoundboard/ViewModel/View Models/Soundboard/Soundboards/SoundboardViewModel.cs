@@ -70,6 +70,18 @@ namespace ManiacSoundboard.ViewModel
 
         #region Properties
 
+        private bool isSimpleSoundboardEnabled;
+
+        public bool IsSimpleSoundboardEnabled
+        {
+            get => isSimpleSoundboardEnabled;
+            set
+            {
+                isSimpleSoundboardEnabled = value;
+                OnPropertyChanged(nameof(IsSimpleSoundboardEnabled));
+            }
+        }
+
         public NotifyTaskCompletion<ObservableCollection<SoundViewModel>> Sounds { get; private set; }
 
         public ObservableCollection<IAudioDevice> AllDevices { get; private set; } = new ObservableCollection<IAudioDevice>();
@@ -517,6 +529,7 @@ namespace ManiacSoundboard.ViewModel
         {
             //<Settings>
             r.ReadStartElement();
+            IsSimpleSoundboardEnabled = r.ReadElementContentAsBoolean(nameof(IsSimpleSoundboardEnabled), "");
             IsFirstDeviceEnabled = r.ReadElementContentAsBoolean(nameof(IsFirstDeviceEnabled), "");
             IsSecondDeviceEnabled = r.ReadElementContentAsBoolean(nameof(IsSecondDeviceEnabled), "");
             IsMuted = r.ReadElementContentAsBoolean(nameof(IsMuted), "");
@@ -541,7 +554,13 @@ namespace ManiacSoundboard.ViewModel
         {
             //<Settings>
             w.WriteStartElement("Settings");
-            
+
+            //<IsSimpleSoundboardEnabled>
+            w.WriteStartElement(nameof(IsSimpleSoundboardEnabled));
+            w.WriteValue(IsSimpleSoundboardEnabled);
+            w.WriteEndElement();
+            //</IsSimpleSoundboardEnabled>
+
             //<IsFirstDeviceEnabled>
             w.WriteStartElement(nameof(IsFirstDeviceEnabled));
             w.WriteValue(IsFirstDeviceEnabled);

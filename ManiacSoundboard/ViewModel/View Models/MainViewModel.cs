@@ -33,18 +33,6 @@ namespace ManiacSoundboard.ViewModel
 
         public string Title { get; set; } = "Maniac Soundboard";
 
-        private bool isSimpleSoundboardEnabled;
-
-        public bool IsSimpleSoundboardEnabled
-        {
-            get => isSimpleSoundboardEnabled;
-            set
-            {
-                isSimpleSoundboardEnabled = value;
-                OnPropertyChanged(nameof(IsSimpleSoundboardEnabled));
-            }
-        }
-
         public SoundboardViewModel SoundboardViewModel { get; private set; }
 
         #endregion
@@ -72,14 +60,14 @@ namespace ManiacSoundboard.ViewModel
             reader.ReadStartElement();
             SoundboardViewModel.ReadXml(reader);
             reader.ReadEndElement();
-            
         }
 
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement("Soundboard");
-            //writer.WriteAttributeString("Interaction", SoundboardViewModelConfiguration.ConfigurationService.Configurations["Interaction"]);
+
             SoundboardViewModel.WriteXml(writer);
+
             writer.WriteEndElement();
         }
 

@@ -130,7 +130,7 @@
             <MenuItem x:Name="viewMenu" Header="View" Style="{StaticResource SoundboardMenuItemStyle}">
                 <MenuItem x:Name="simpleAudioPlayerMenuItem" Header="Simple view"
                           IsCheckable="True" Style="{StaticResource SoundboardSubmenuItemStyle}"
-                          IsChecked="False"/>
+                          IsChecked="{Binding IsSimpleSoundboardEnabled, Mode=TwoWay}"/>
             </MenuItem>
             
             <!--=============Playback=============-->
