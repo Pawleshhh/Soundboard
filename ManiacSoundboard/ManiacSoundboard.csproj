@@ -126,7 +126,7 @@
     <Compile Include="Model\Audio Service\Devices\Interfaces\IAudioDeviceService.cs" />
     <Compile Include="Model\Audio Service\Devices\Interfaces\IDeviceNotification.cs" />
     <Compile Include="Model\Audio Service\Devices\MMRenderNotificationClient.cs" />
-    <Compile Include="Model\Audio Service\Interfaces\IPlayer.cs" />
+    <Compile Include="Model\Audio Service\Players\Interfaces\IPlayer.cs" />
     <Compile Include="Model\Soundboard\Collections\SoundboardCacheCollection.cs" />
     <Compile Include="Model\Soundboard\Interfaces\Soundboard.cs" />
     <Compile Include="Model\Soundboard\SoundboardStaticSimpleFactory.cs" />

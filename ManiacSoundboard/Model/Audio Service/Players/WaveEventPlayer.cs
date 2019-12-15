@@ -71,6 +71,9 @@ namespace ManiacSoundboard.Model
         /// </summary>
         public string AudioPath { get; private set; }
 
+        /// <summary>
+        /// Gets or sets tag name.
+        /// </summary>
         public string TagName { get; set; }
 
         /// <summary>
@@ -92,6 +95,9 @@ namespace ManiacSoundboard.Model
 
         private bool isFirstWaveOutDeviceEnabled = true;
 
+        /// <summary>
+        /// Gets or sets whether the first device is enabled or not (does not change value of the device).
+        /// </summary>
         public bool IsFirstDeviceEnabled
         {
             get
@@ -105,6 +111,9 @@ namespace ManiacSoundboard.Model
 
         private bool isSecondWaveOutDeviceEnabled = true;
 
+        /// <summary>
+        /// Gets or sets whether the second device is enabled or not (does not change value of the device).
+        /// </summary>
         public bool IsSecondDeviceEnabled
         {
             get
@@ -256,12 +265,18 @@ namespace ManiacSoundboard.Model
 
         #region Methods
 
+        /// <summary>
+        /// Inits this player.
+        /// </summary>
         public void InitPlayer()
         {
             _InitFirstPlayer();
             _InitSecondPlayer();
         }
 
+        /// <summary>
+        /// Plays the audio.
+        /// </summary>
         public void Play()
         {
             if (State == PlayerState.Playing) Stop();
@@ -279,6 +294,9 @@ namespace ManiacSoundboard.Model
             OnAudioPlayed();
         }
 
+        /// <summary>
+        /// Pauses the audio.
+        /// </summary>
         public void Pause()
         {
             if (State != PlayerState.Playing) return;
@@ -291,6 +309,9 @@ namespace ManiacSoundboard.Model
             OnAudioPaused();
         }
 
+        /// <summary>
+        /// Stops the audio.
+        /// </summary>
         public void Stop()
         {
             if (IsFirstDeviceEnabled)
