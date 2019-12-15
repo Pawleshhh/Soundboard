@@ -465,15 +465,28 @@
             
             <!--SpeakerVolumeIcon-->
             <Grid Background="Transparent">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF6D96B2"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonUp">
                         <i:InvokeCommandAction Command="{Binding MuteVolumeCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <Image Source="{DynamicResource speakerMaxVolumeWhiteIcon_1}"
-                   Visibility="{Binding IsMuted, Mode=OneWay, Converter={StaticResource inverseBool2VisibConv}}"/>
-                <Image Source="{DynamicResource muteSpeakerWhiteIcon_1}"
-                   Visibility="{Binding IsMuted, Mode=OneWay, Converter={StaticResource bool2VisibConv}}"/>
+                <Border Visibility="{Binding IsMuted, Mode=OneWay, Converter={StaticResource inverseBool2VisibConv}}">
+                    <Image Source="{DynamicResource speakerMaxVolumeWhiteIcon_1}"/>
+                </Border>
+                <Border Visibility="{Binding IsMuted, Mode=OneWay, Converter={StaticResource bool2VisibConv}}">
+                    <Image Source="{DynamicResource muteSpeakerWhiteIcon_1}"/>
+                </Border>
             </Grid>
 
             <!--Volume %-->
