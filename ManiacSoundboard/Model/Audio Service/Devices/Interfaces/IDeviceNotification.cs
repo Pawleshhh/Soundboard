@@ -3,6 +3,10 @@ using System;
 
 namespace ManiacSoundboard.Model
 {
+
+    /// <summary>
+    /// Defines interface of objects that notify if audio devices changed.
+    /// </summary>
     public interface IDeviceNotification
     {
 

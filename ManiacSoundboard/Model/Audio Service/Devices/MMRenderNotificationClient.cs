@@ -4,17 +4,36 @@ using System;
 
 namespace ManiacSoundboard.Model
 {
+
+    /// <summary>
+    /// Gives events that notify that render audio devices changed (e.g. default render device changed, plugged, unplugged, etc.).
+    /// </summary>
     public class MMRenderNotificationClient : IDeviceNotification, IMMNotificationClient
     {
 
+        /// <summary>
+        /// Rises when default device changed.
+        /// </summary>
         public event EventHandler<DeviceNotificationEventArgs> DefaultDeviceChaned;
 
+        /// <summary>
+        /// Rises when device has been added.
+        /// </summary>
         public event EventHandler<DeviceNotificationEventArgs> DeviceAdded;
 
+        /// <summary>
+        /// Rises when device has been removed.
+        /// </summary>
         public event EventHandler<DeviceNotificationEventArgs> DeviceRemoved;
 
+        /// <summary>
+        /// Rises when device's state has been changed.
+        /// </summary>
         public event EventHandler<DeviceStateChangedEventArgs> DeviceStateChanged;
 
+        /// <summary>
+        /// Rises when device's property has been changed.
+        /// </summary>
         public event EventHandler<DeviceNotificationEventArgs> PropertyValueChanged;
 
         void IMMNotificationClient.OnDefaultDeviceChanged(DataFlow flow, Role role, string defaultDeviceId)

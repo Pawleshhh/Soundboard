@@ -35,15 +35,18 @@ namespace ManiacSoundboard.Model
 
         #region Properties
 
+        /// <summary>
+        /// Gets object that notifies if devices changed.
+        /// </summary>
         public IDeviceNotification Notifications { get; private set; }
 
         /// <summary>
-        /// Gets all in-audio devices.
+        /// Gets collection of stored in (capture) audio devices.
         /// </summary>
         public IReadOnlyCollection<IAudioDevice> InDevices { get; private set; }
 
         /// <summary>
-        /// Gets all out-audio devices.
+        /// Gets collection of stored out (render) audio devices.
         /// </summary>
         public IReadOnlyCollection<IAudioDevice> OutDevices { get; private set; }
 
@@ -82,17 +85,26 @@ namespace ManiacSoundboard.Model
             return false;
         }*/
 
+        /// <summary>
+        /// Updates collections of out (<see cref="OutDevices"/>) and in (<see cref="InDevices"/>) devices.
+        /// </summary>
         public void ReloadDevices()
         {
             InDevices = _GetWaveInDevices();
             OutDevices = _GetWaveOutDevices();
         }
 
+        /// <summary>
+        /// Updates collection of out (<see cref="OutDevices"/>).
+        /// </summary>
         public void ReloadOutDevices()
         {
             OutDevices = _GetWaveOutDevices();
         }
 
+        /// <summary>
+        /// Updates collection of in (<see cref="InDevices"/>).
+        /// </summary>
         public void ReloadInDevices()
         {
             InDevices = _GetWaveInDevices();
@@ -156,15 +168,6 @@ namespace ManiacSoundboard.Model
             }
 
             return waveInDevices;
-        }
-
-        private void _InitMMDeviceEnumerator()
-        {
-            //Dispose();
-
-            //_enumerator = new MMDeviceEnumerator();
-            //Client = new MMNotificationClient();
-            //RegisterEndpointNotificationCallback(Client);
         }
 
         /// <summary>
