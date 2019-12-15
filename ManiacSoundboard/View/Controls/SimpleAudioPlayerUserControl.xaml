@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="ManiacSoundboard.SimpleAudioPlayerUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ManiacSoundboard"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d"
+             d:DesignHeight="150" d:DesignWidth="150"
+             BorderThickness="2"
+             x:Name="audioPlayerUserControl"
+             BorderBrush="#6e0101"
+             Foreground="Black">
+
+    <!--=============Resources=============-->
+    <UserControl.Resources>
+
+        <local:FormsKeyToWpfKeyConverter x:Key="formsKeyToWpf"/>
+        <local:FormsModifiersToWpfModifiersConverter x:Key="formsModToWpfMod"/>
+        <local:PlayerStateToBooleanConverter x:Key="plStateToBoolConv"/>
+        <local:PlayerStateToSoundAxisStateConverter x:Key="plStateToAxisStateConv"/>
+
+    </UserControl.Resources>
+
+    <!--=============Style=============-->
+    <UserControl.Style>
+        <Style TargetType="{x:Type UserControl}">
+            <Setter Property="Background" Value="#FFA80606"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="#6e0101"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsPlaying, Mode=OneWay}" Value="True">
+                    <Setter Property="Background" Value="#FF870095"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsPaused, Mode=OneWay}" Value="True">
+                    <Setter Property="Background" Value="#FFBD3460"/>
+                </DataTrigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#FF744A4A"/>
+                    <Setter Property="BorderBrush" Value="#FF422A2A"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+
+    <UserControl.ToolTip>
+        <TextBlock Text="Double click to play/stop"/>
+    </UserControl.ToolTip>
+
+    <!--=============Interactions=============-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseDoubleClick">
+            <i:InvokeCommandAction Command="{Binding PlayStopCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <!--=============Main Grid=============-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+
+        <!--File Path-->
+        <TextBox x:Name="pathTextBox" Grid.Row="0" Text="{Binding AudioPath, Mode=OneWay}"
+                 VerticalAlignment="Center" Margin="5" Style="{StaticResource ReadOnlyTextBoxStyle}"
+                 FlowDirection="RightToLeft" PreviewMouseDoubleClick="pathTextBox_MouseDoubleClick"/>
+        
+        
+        <!--Tag Name-->
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Tag name" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBox x:Name="tagNameTextBox" Grid.Row="1" Text="{Binding TagName, Mode=TwoWay}"
+                 VerticalAlignment="Center" Margin="30, 5" Style="{StaticResource AppTextBoxStyle}"
+                 PreviewMouseDoubleClick="pathTextBox_MouseDoubleClick"/>
+        </StackPanel>
+
+        <!--Key binding-->
+        <local:KeyBindingUserControl x:Name="keyBindingUserControl" Grid.Row="2"
+                                         Margin="5" PreviewMouseDoubleClick="keyBindingUserControl_MouseDoubleClick"
+                                         TriggerKey="{Binding Key, Mode=TwoWay,
+                                                    Converter={StaticResource formsKeyToWpf}}"
+                                         Modifiers="{Binding Modifiers, Mode=TwoWay,
+                                                    Converter={StaticResource formsModToWpfMod}}"/>
+        
+    </Grid>
+</UserControl>

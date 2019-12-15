@@ -1,0 +1,533 @@
+﻿<local:AppBaseWindow x:Class="ManiacSoundboard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ManiacSoundboard"
+        xmlns:vm="clr-namespace:ManiacSoundboard.ViewModel"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:xcf="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        x:Name="mainWindow"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        FontFamily="{StaticResource LatoMedium}"
+        Icon="{Binding IconPath, Mode=OneWay}"
+        Title="{Binding Title, Mode=OneWay}" 
+        TrayTitle="{Binding Title, Mode=OneWay}"
+        IsTrayIconEnabled="True"
+        Height="450" Width="900">
+
+    <Window.Resources>
+        <local:KeyCombinationModifiersConverter x:Key="combModifiersConv"/>
+        <local:KeyCombinationTriggerKeyConverter x:Key="combTriggerKeyConv"/>
+        <local:RoundVolumeConverter x:Key="roundVolumeConv"/>
+        <xcf:VisibilityToBoolConverter x:Key="visibToBoolConv"/>
+
+        <Style TargetType="{x:Type local:MainWindow}" BasedOn="{StaticResource AppMainWindowStyle}"/>
+
+        <DataTemplate x:Key="DefaultAudioPlayer">
+            <local:AudioPlayerUserControl IsEnabled="{Binding ElementName=mainGrid, Path=DataContext.IsNotChangingDevice, Mode=OneWay}" 
+                                          Width="425" Height="150"
+                                          IsTabStop="True" KeyboardNavigation.TabNavigation="Continue"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SimpleAudioPlayer">
+            <local:SimpleAudioPlayerUserControl IsEnabled="{Binding ElementName=mainGrid, Path=DataContext.IsNotChangingDevice, Mode=OneWay}"
+                                                            Width="200" Height="200"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AudioPlayerDataTemplate">
+            <ContentControl Content="{Binding }">
+                <ContentControl.Style>
+                    <Style TargetType="{x:Type ContentControl}">
+
+                        <!-- Default Template -->
+                        <Setter Property="ContentTemplate" Value="{StaticResource DefaultAudioPlayer}" />
+
+                        <!-- Triggers to change Template -->
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=simpleAudioPlayerMenuItem, Path=IsChecked}" Value="True">
+                                <Setter Property="ContentTemplate" Value="{StaticResource SimpleAudioPlayer}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+        </DataTemplate>
+
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" ResizeBorderThickness="8"
+                      GlassFrameThickness="0" CornerRadius="0"/>
+    </WindowChrome.WindowChrome>
+
+    <!--=============Main Grid=============-->
+    <Grid x:Name="mainGrid" DataContext="{Binding SoundboardViewModel, Mode=OneWay}">
+        <Grid.RowDefinitions>
+            <!--Menu row-->
+            <RowDefinition Height="20"/>
+            <!--Toolbar row-->
+            <RowDefinition Height="50"/>
+            <!--Main content-->
+            <RowDefinition/>
+            <!--Status bar-->
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+
+        <!--=============Menu row=============-->
+        <Menu x:Name="mainMenu" Grid.Row="0" RenderOptions.BitmapScalingMode="NearestNeighbor">
+            <Menu.Style>
+                <Style TargetType="{x:Type Menu}" BasedOn="{StaticResource SoundboardMenuStyle}"/>
+            </Menu.Style>
+            <Menu.Resources>
+                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource SoundboardSubmenuItemStyle}">
+                    <Setter Property="Height" Value="20"/>
+                </Style>
+            </Menu.Resources>
+
+            <!--=============File=============-->
+            <MenuItem x:Name="fileMenu" Header="File" 
+                      Style="{StaticResource SoundboardMenuItemStyle}">
+                <MenuItem x:Name="addSoundsMenuItem" Header="Add sounds..." Command="{Binding AddSoundsCommand}"
+                          IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                    <MenuItem.Icon>
+                        <Image Source="{DynamicResource addMusicWhiteIcon_1}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem x:Name="exitMenuItem" Header="Exit">
+                    <i:Interaction.Behaviors>
+                        <local:ClosingWindowMenuItemBehavior WindowToClose="{Binding ElementName=mainWindow}"/>
+                    </i:Interaction.Behaviors>
+                    <MenuItem.Icon>
+                        <Image Source="{DynamicResource closeRedIcon_1}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <!--=============Edit=============-->
+            <MenuItem x:Name="editMenu" Header="Edit"
+                      Style="{StaticResource SoundboardMenuItemStyle}">
+                <MenuItem x:Name="removeSelectedMenuItem" Header="Remove selected sounds" Command="{Binding RemoveSoundsCommand}"
+                          CommandParameter="{Binding ElementName=soundboardListView, Path=SelectedItems}"
+                          IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                    <MenuItem.Icon>
+                        <Image Source="{DynamicResource removeMusicWhiteIcon_1}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="removeAllMenuItem" Header="Remove all sounds" Command="{Binding RemoveAllSoundsCommand}"
+                          IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                    <MenuItem.Icon>
+                        <Image Source="{DynamicResource deleteAllWhiteIcon_1}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            
+            <!--=============View=============-->
+            <MenuItem x:Name="viewMenu" Header="View" Style="{StaticResource SoundboardMenuItemStyle}">
+                <MenuItem x:Name="simpleAudioPlayerMenuItem" Header="Simple view"
+                          IsCheckable="True" Style="{StaticResource SoundboardSubmenuItemStyle}"
+                          IsChecked="False"/>
+            </MenuItem>
+            
+            <!--=============Playback=============-->
+            <MenuItem x:Name="playbackMenu" Header="Playback" Style="{StaticResource SoundboardMenuItemStyle}">
+                <MenuItem x:Name="playPausedMenuItem" Header="Play paused" Command="{Binding PlayPausedCommand}"
+                          IsEnabled="{Binding IsNotBusy, Mode=OneWay}" InputGestureText="{Binding ElementName=playBinding, Path=BoundKeysText}">
+                    <MenuItem.Icon>
+                        <Image Source="{DynamicResource playWhiteIcon_1}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="pauseAllMenuItem" Header="Pause all" Command="{Binding PauseAllCommand}"
+                          IsEnabled="{Binding IsNotBusy, Mode=OneWay}" InputGestureText="{Binding ElementName=pauseBinding, Path=BoundKeysText}">
+                    <MenuItem.Icon>
+                        <Image Source="{DynamicResource pauseWhiteIcon_1}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="stopAllMenuItem" Header="Stop all" Command="{Binding StopAllCommand}"
+                          IsEnabled="{Binding IsNotBusy, Mode=OneWay}" InputGestureText="{Binding ElementName=stopBinding, Path=BoundKeysText}">
+                    <MenuItem.Icon>
+                        <Rectangle Fill="White" Margin="3"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <!--=============Devices=============-->
+            <MenuItem x:Name="devicesMenu" Header="Devices"
+                      Style="{StaticResource SoundboardMenuItemStyle}"
+                      IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                <MenuItem x:Name="reloadDevicesMenuItem" Header="Reload devices" Command="{Binding ReloadDevicesCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="{DynamicResource reloadWhiteIcon_1}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem x:Name="enableFirstDeviceMenuItem" Header="Enable first device" IsCheckable="True"
+                          IsChecked="{Binding IsFirstDeviceEnabled, Mode=TwoWay}"/>
+                <MenuItem x:Name="enableSecondDeviceMenuItem" Header="Enable second device" IsCheckable="True"
+                          IsChecked="{Binding IsSecondDeviceEnabled, Mode=TwoWay}"/>
+                <Separator/>
+                <MenuItem x:Name="muteVolumeMenuItem" Header="Mute"
+                          IsCheckable="True" IsChecked="{Binding IsMuted, Mode=TwoWay}">
+                    <MenuItem.Icon>
+                        <Image Source="{DynamicResource muteSpeakerWhiteIcon_1}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="increaseVolumeMenuItem" Header="Increase volume" 
+                          Command="{Binding IncreaseVolumeCommand}"
+                          InputGestureText="{Binding ElementName=increaseVolumeBinding, Path=BoundKeysText}">
+                    <MenuItem.Icon>
+                        <Image Source="{DynamicResource speakerIncreaseVolumeWhiteIcon_1}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="decreaseVolumeMenuItem" Header="Decrease volume"
+                          Command="{Binding DecreaseVolumeCommand}"
+                          InputGestureText="{Binding ElementName=decreaseVolumeBinding, Path=BoundKeysText}">
+                    <MenuItem.Icon>
+                        <Image Source="{DynamicResource speakerDecreaseVolumeWhiteIcon_1}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <!--=============Key bindings=============-->
+            <MenuItem x:Name="keyBindingsMenu" Header="Key bindings"
+                      Style="{StaticResource SoundboardMenuItemStyle}">
+                <MenuItem x:Name="handleKeysMenuItem" Header="Handle keys" IsCheckable="True"
+                          IsChecked="{Binding IsEnabled, Mode=TwoWay}"
+                          IsEnabled="{Binding IsNotBusy, Mode=OneWay}"/>
+            </MenuItem>
+            
+        </Menu>
+
+        <!--=============Toolbar row=============-->
+        <ToolBar x:Name="toolbarMenu" Grid.Row="1" KeyboardNavigation.TabNavigation="Continue"
+                 RenderOptions.BitmapScalingMode="NearestNeighbor" Template="{DynamicResource SoundboardToolBarTemplate}">
+            <ToolBar.Style>
+                <Style TargetType="{x:Type ToolBar}">
+                    <Setter Property="Background" Value="{StaticResource AppMenuBackground}"/>
+                    <!--<Setter Property="BorderThickness" Value="0, 1, 0, 0"/>
+                    <Setter Property="BorderBrush" Value="Black"/>-->
+                </Style>
+            </ToolBar.Style>
+            <ToolBar.Resources>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Width" Value="30"/>
+                    <Setter Property="Height" Value="30"/>
+                </Style>
+                <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource AppCheckBoxDefaultStyle}">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="0, 0, 0, 0"/>
+                </Style>
+                <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource ComboBoxDefaultStyle}">
+                    <Setter Property="Margin" Value="3,2"/>
+                    <Setter Property="Width" Value="150"/>
+                </Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="Margin" Value="3, 0, 0, 0"/>
+                </Style>
+            </ToolBar.Resources>
+
+            <!--=============Add/Remove Buttons=============-->
+
+            <Button x:Name="addButton" Command="{Binding AddSoundsCommand}"
+                    Style="{StaticResource AppButtonBaseStyle}" Margin="1"
+                    IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                <Button.Content>
+                    <Image Source="{DynamicResource addMusicIcon_1}"/>
+                </Button.Content>
+                <Button.ToolTip>
+                    Add sounds
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="removeButton" 
+                    Style="{StaticResource AppButtonBaseStyle}"
+                    Command="{Binding RemoveSoundsCommand}"
+                    CommandParameter="{Binding ElementName=soundboardListView, Path=SelectedItems}"
+                    Margin="1"
+                    IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                <Button.Content>
+                    <Image Source="{DynamicResource removeMusicIcon_1}"/>
+                </Button.Content>
+                <Button.ToolTip>
+                    Remove selected sounds
+                </Button.ToolTip>
+            </Button>
+            <Button x:Name="removeAllButton"
+                    Style="{StaticResource AppButtonBaseStyle}" 
+                    Command="{Binding RemoveAllSoundsCommand}" Margin="1"
+                    IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                <Button.Content>
+                    <Image Source="{DynamicResource deleteAllIcon_1}"/>
+                </Button.Content>
+                <Button.ToolTip>
+                    Remove all
+                </Button.ToolTip>
+            </Button>
+            
+            <Separator Background="Black"/>
+
+            <!--=============Devices=============-->
+            <Grid IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <CheckBox x:Name="firstDeviceCheckBox" IsChecked="{Binding IsFirstDeviceEnabled, Mode=TwoWay}">
+                    <CheckBox.ToolTip>
+                        Enable first device.
+                    </CheckBox.ToolTip>
+                </CheckBox>
+
+                <CheckBox x:Name="secondDeviceCheckBox" Grid.Row="1" IsChecked="{Binding IsSecondDeviceEnabled, Mode=TwoWay}">
+                    <CheckBox.ToolTip>
+                        Enable second device.
+                    </CheckBox.ToolTip>
+                </CheckBox>
+
+                <ComboBox x:Name="firstDeviceComboBox" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding AllDevices}"
+                          SelectedItem="{Binding FirstDevice, Mode=TwoWay}"
+                          IsEnabled="{Binding ElementName=firstDeviceCheckBox, Path=IsChecked}"/>
+                <ComboBox x:Name="secondDeviceComboBox" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding AllDevices}"
+                          SelectedItem="{Binding SecondDevice, Mode=TwoWay}"
+                          IsEnabled="{Binding ElementName=secondDeviceCheckBox, Path=IsChecked}"/>
+
+                <Button x:Name="reloadDevicesButton" Grid.Column="3" Grid.RowSpan="2"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Style="{StaticResource AppButtonBaseStyle}"
+                        Command="{Binding ReloadDevicesCommand}">
+                    <Image Margin="2" Width="20" Height="20" Source="{DynamicResource reloadIcon_1}"/>
+                    <Button.ToolTip>
+                        Reload devices
+                    </Button.ToolTip>
+                </Button>
+
+            </Grid>
+
+            <Separator Background="Black"/>
+
+            <!--=============Play/Pause/Stop=============-->
+
+            <!--Play key-->
+            <local:KeyBindingUserControl x:Name="playBinding"
+                                             Margin="5" Height="25" Width="60"
+                                             KeyCombination="{Binding PlayPausedKey, Mode=TwoWay}"
+                                             IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                <local:KeyBindingUserControl.ToolTip>
+                    Bind key or double click to play all paused
+                </local:KeyBindingUserControl.ToolTip>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding PlayPausedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </local:KeyBindingUserControl>
+            <!--Pause key-->
+            <local:KeyBindingUserControl x:Name="pauseBinding"
+                                             Margin="5" Height="25" Width="60"
+                                             KeyCombination="{Binding PauseKey, Mode=TwoWay}"
+                                             IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                <local:KeyBindingUserControl.ToolTip>
+                    Bind key or duble click to pause all
+                </local:KeyBindingUserControl.ToolTip>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding PauseAllCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </local:KeyBindingUserControl>
+            <!--Stop key-->
+            <local:KeyBindingUserControl x:Name="stopBinding"
+                                             Margin="5" Height="25" Width="60"
+                                             KeyCombination="{Binding StopKey, Mode=TwoWay}"
+                                             IsEnabled="{Binding IsNotBusy, Mode=OneWay}">
+                <local:KeyBindingUserControl.ToolTip>
+                    Bind key or double click to stop all
+                </local:KeyBindingUserControl.ToolTip>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding StopAllCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </local:KeyBindingUserControl>
+
+            <Separator Background="Black"/>
+
+            <!--=============Volume keys=============-->
+            
+            <!--Mute key-->
+            <local:KeyBindingUserControl x:Name="muteVolumeBinding"
+                                         Margin="5" Height="25" Width="60"
+                                         KeyCombination="{Binding MuteVolumeKey, Mode=TwoWay}">
+                <local:KeyBindingUserControl.ToolTip>
+                    Mute volume key
+                </local:KeyBindingUserControl.ToolTip>
+            </local:KeyBindingUserControl>
+            
+            <!--Increase key-->
+            <local:KeyBindingUserControl x:Name="increaseVolumeBinding"
+                                             Margin="5" Height="25" Width="60"
+                                             KeyCombination="{Binding IncreaseVolumeKey, Mode=TwoWay}">
+                <local:KeyBindingUserControl.ToolTip>
+                    Increase volume key
+                </local:KeyBindingUserControl.ToolTip>
+            </local:KeyBindingUserControl>
+            <!--Decrease key-->
+            <local:KeyBindingUserControl x:Name="decreaseVolumeBinding"
+                                             Margin="5" Height="25" Width="60"
+                                             KeyCombination="{Binding DecreaseVolumeKey, Mode=TwoWay}">
+                <local:KeyBindingUserControl.ToolTip>
+                    Decrease volume key
+                </local:KeyBindingUserControl.ToolTip>
+            </local:KeyBindingUserControl>
+            
+            <Separator Background="Black"/>
+
+            <!--=============Handle keys=============-->
+            <CheckBox x:Name="handleKeysCheckBox" Content="Handle keys" Style="{StaticResource AppCheckBoxDefaultStyle}"
+                          Foreground="White"
+                          IsChecked="{Binding HandlesKeyEvents, Mode=TwoWay}" 
+                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                          IsEnabled="{Binding IsNotBusy, Mode=OneWay}"/>
+
+        </ToolBar>
+
+        <!--=============Main content=============-->
+        <Grid x:Name="mainContentGrid" Grid.Row="2">
+            <ListView x:Name="soundboardListView" ItemsSource="{Binding Sounds.Result}"
+                      AllowDrop="True" Drop="soundboardListView_Drop"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource AudioPlayerDataTemplate}">
+                <ListView.Style>
+                    <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource SounboardListViewStyle}">
+                    </Style>
+                </ListView.Style>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" 
+                       BasedOn="{StaticResource SoundboardListViewItemStyle}">
+                        <Setter Property="Focusable" Value="True"/>
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <!--<ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:AudioPlayerUserControl IsEnabled="{Binding ElementName=mainGrid, Path=DataContext.IsNotChangingDevice, Mode=OneWay}" 
+                                                  Width="425" Height="150"
+                                                  IsTabStop="True" KeyboardNavigation.TabNavigation="Continue"/>
+
+                        <local:SimpleAudioPlayerUserControl IsEnabled="{Binding ElementName=mainGrid, Path=DataContext.IsNotChangingDevice, Mode=OneWay}"
+                                                            Width="200" Height="200"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>-->
+            </ListView>
+
+            <fa:ImageAwesome Icon="Refresh" Spin="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Visibility, Converter={StaticResource visibToBoolConv}}" Height="48" Width="48" 
+                             Visibility="{Binding IsBusy, Converter={StaticResource bool2VisibConv}}"/>
+
+            
+            
+            <!--<TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Text="Loading..." FontSize="50" Panel.ZIndex="10"
+                   Visibility="{Binding Sounds.IsNotCompleted, Converter={StaticResource boolToVisibConv}}"/>-->
+        </Grid>
+
+        <!--=============Status bar=============-->
+        <StatusBar x:Name="mainStatusBar" Grid.Row="3" HorizontalContentAlignment="Right" VerticalContentAlignment="Center">
+            <StatusBar.Style>
+                <Style TargetType="{x:Type StatusBar}">
+                    <Setter Property="Background" Value="{StaticResource AppMenuBackground}"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
+            </StatusBar.Style>
+            
+            <!--Count-->
+            <TextBlock x:Name="soundsCountTextBlock">
+                <Run Text="Count: "/>
+                <Run Text="{Binding Sounds.Result.Count, Mode=OneWay}"/>
+            </TextBlock>
+            
+            <Separator/>
+            
+            <!--SpeakerVolumeIcon-->
+            <Grid Background="Transparent">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <i:InvokeCommandAction Command="{Binding MuteVolumeCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <Image Source="{DynamicResource speakerMaxVolumeWhiteIcon_1}"
+                   Visibility="{Binding IsMuted, Mode=OneWay, Converter={StaticResource inverseBool2VisibConv}}"/>
+                <Image Source="{DynamicResource muteSpeakerWhiteIcon_1}"
+                   Visibility="{Binding IsMuted, Mode=OneWay, Converter={StaticResource bool2VisibConv}}"/>
+            </Grid>
+
+            <!--Volume %-->
+            <TextBlock  MinWidth="45"
+                        Text="{Binding ElementName=volumeSlider, Path=Value, StringFormat=P, Mode=OneWay, FallbackValue=0}"/>
+            
+            <!--Minus-->
+            <TextBlock Text="-"/>
+            
+            <!--Slider of volume-->
+            <Slider x:Name="volumeSlider" MinWidth="100" 
+                    SmallChange="{Binding VolumeStep, Mode=OneWay}"
+                    LargeChange="{Binding VolumeStep, Mode=OneWay}"                
+                    Orientation="Horizontal" IsMoveToPointEnabled="True"
+                    Maximum="1" Minimum="0" Value="{Binding Volume, Mode=TwoWay, Delay=100}"
+                    TickFrequency="0.01"
+                    IsEnabled="{Binding IsNotChangingDevice, Mode=OneWay}" Style="{StaticResource SoundboardVolumeSliderStyle}">
+                <Slider.ToolTip>
+                    <ToolTip>
+                        <TextBlock>
+                            <Run Text="Volume: "/>
+                            <Run Text="{Binding Volume, StringFormat=P, FallbackValue=0}"/>
+                        </TextBlock>
+                    </ToolTip>
+                </Slider.ToolTip>
+            </Slider>
+            
+            <!--Plus-->
+            <TextBlock Text="+"/>
+            
+            <Separator/>
+            
+            <!--Volume step-->
+            <xcf:DoubleUpDown Minimum="0.01" Maximum="1" Increment="0.01" MinWidth="50"
+                              Background="{StaticResource AppMenuBackground}"
+                              BorderBrush="White" Foreground="White" AllowTextInput="False"
+                              Value="{Binding VolumeStep, Mode=TwoWay, Converter={StaticResource roundVolumeConv}}">
+                <xcf:DoubleUpDown.Style>
+                    <Style TargetType="{x:Type xcf:DoubleUpDown}">
+                        <Style.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#b6dbdb"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </xcf:DoubleUpDown.Style>
+                <xcf:DoubleUpDown.ToolTip>
+                    <ToolTip>
+                        <TextBlock Text="Volume step"/>
+                    </ToolTip>
+                </xcf:DoubleUpDown.ToolTip>
+            </xcf:DoubleUpDown>
+            
+        </StatusBar>
+
+    </Grid>
+</local:AppBaseWindow>

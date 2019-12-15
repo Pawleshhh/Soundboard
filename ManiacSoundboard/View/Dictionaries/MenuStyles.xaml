@@ -1,0 +1,387 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ManiacSoundboard" 
+                    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+
+    <SolidColorBrush x:Key="AppMenuBackground" Color="#2f2f36"/>
+    
+    <!--#region Toolbar-->
+
+    <!--=============Toolbar brushes=============-->
+    <SolidColorBrush x:Key="SoundboardToolBarTemplate.OverflowButton.Static.Background" Color="#52525c"/>
+    <SolidColorBrush x:Key="SoundboardToolBarTemplate.OverflowButton.MouseOver.Background" Color="#6d6d7a"/>
+
+    <!--=============SoundboardToolBarTemplate=============-->
+    <ControlTemplate x:Key="SoundboardToolBarTemplate" TargetType="{x:Type ToolBar}">
+        <Grid x:Name="Grid" Margin="0" SnapsToDevicePixels="True">
+            <Grid x:Name="OverflowGrid" HorizontalAlignment="Right">
+                <ToggleButton x:Name="OverflowButton" Background="{StaticResource SoundboardToolBarTemplate.OverflowButton.Static.Background}"
+                              ClickMode="Press" FocusVisualStyle="{x:Null}"
+                              IsChecked="{Binding IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                              IsEnabled="{TemplateBinding HasOverflowItems}">
+                    <ToggleButton.Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Background" Value="#FFEEF5FD"/>
+                            <Setter Property="MinHeight" Value="0"/>
+                            <Setter Property="MinWidth" Value="0"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                            <Canvas HorizontalAlignment="Right" Height="7" Margin="7,2,2,2" SnapsToDevicePixels="True" VerticalAlignment="Bottom" Width="6">
+                                                <Path Data="M1,1.5L6,1.5" Stroke="White"/>
+                                                <Path Data="M0,0.5L5,0.5" Stroke="{TemplateBinding Foreground}"/>
+                                                <Path Data="M0.5,4L6.5,4 3.5,7z" Fill="White"/>
+                                                <Path Data="M-0.5,3L5.5,3 2.5,6z" Fill="{TemplateBinding Foreground}"/>
+                                            </Canvas>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource SoundboardToolBarTemplate.OverflowButton.MouseOver.Background}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource SoundboardToolBarTemplate.OverflowButton.MouseOver.Background}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Foreground" Value="#FF6D6D6D"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding}" Value="true">
+                                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+                <Popup x:Name="OverflowPopup" AllowsTransparency="True" Focusable="False" 
+                       IsOpen="{Binding IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                       PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
+                       Placement="Bottom" StaysOpen="False">
+                    <Themes:SystemDropShadowChrome x:Name="Shdw" Color="Transparent">
+                        <Border x:Name="ToolBarSubMenuBorder" BorderBrush="#FFB6BDC5" BorderThickness="1" Background="{StaticResource AppMenuBackground}" RenderOptions.ClearTypeHint="Enabled">
+                            <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel" KeyboardNavigation.DirectionalNavigation="Cycle" FocusVisualStyle="{x:Null}" Focusable="True" Margin="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" KeyboardNavigation.TabNavigation="Cycle" WrapWidth="200"/>
+                        </Border>
+                    </Themes:SystemDropShadowChrome>
+                </Popup>
+            </Grid>
+            <Border x:Name="MainPanelBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Margin" Value="0,0,11,0"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding}" Value="true">
+                                <Setter Property="CornerRadius" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <DockPanel KeyboardNavigation.TabIndex="1" KeyboardNavigation.TabNavigation="Local">
+                    <Thumb x:Name="ToolBarThumb" Margin="-3,-1,0,0" Padding="6,5,1,6" Width="10" Visibility="Collapsed">
+                        <Thumb.Style>
+                            <Style TargetType="{x:Type Thumb}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Thumb}">
+                                            <Border Background="Transparent" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                                                <Rectangle>
+                                                    <Rectangle.Fill>
+                                                        <DrawingBrush TileMode="Tile" Viewbox="0,0,4,4" Viewport="0,0,4,4" ViewportUnits="Absolute" ViewboxUnits="Absolute">
+                                                            <DrawingBrush.Drawing>
+                                                                <DrawingGroup>
+                                                                    <GeometryDrawing Brush="White" Geometry="M1,1L1,3 3,3 3,1z"/>
+                                                                    <GeometryDrawing Brush="#FF6D6D6D" Geometry="M0,0L0,2 2,2 2,0z"/>
+                                                                </DrawingGroup>
+                                                            </DrawingBrush.Drawing>
+                                                        </DrawingBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Cursor" Value="SizeAll"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Thumb.Style>
+                    </Thumb>
+                    <ContentPresenter x:Name="ToolBarHeader" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="Center" Margin="4,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                    <ToolBarPanel x:Name="PART_ToolBarPanel" IsItemsHost="True" Margin="0,1,2,2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                </DockPanel>
+            </Border>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsOverflowOpen" Value="True">
+                <Setter Property="IsEnabled" TargetName="ToolBarThumb" Value="False"/>
+            </Trigger>
+            <Trigger Property="Header" Value="{x:Null}">
+                <Setter Property="Visibility" TargetName="ToolBarHeader" Value="Collapsed"/>
+            </Trigger>
+            <Trigger Property="ToolBarTray.IsLocked" Value="True">
+                <Setter Property="Visibility" TargetName="ToolBarThumb" Value="Collapsed"/>
+            </Trigger>
+            <Trigger Property="HasDropShadow" SourceName="OverflowPopup" Value="True">
+                <Setter Property="Margin" TargetName="Shdw" Value="0,0,5,5"/>
+                <Setter Property="SnapsToDevicePixels" TargetName="Shdw" Value="True"/>
+                <Setter Property="Color" TargetName="Shdw" Value="#71000000"/>
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Margin" TargetName="Grid" Value="1,3,1,1"/>
+                <Setter Property="Style" TargetName="OverflowButton">
+                    <Setter.Value>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Background" Value="#FFEEF5FD"/>
+                            <Setter Property="MinHeight" Value="0"/>
+                            <Setter Property="MinWidth" Value="0"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="0,0,3,3" SnapsToDevicePixels="True">
+                                            <Canvas HorizontalAlignment="Right" Height="6" Margin="2,7,2,2" SnapsToDevicePixels="True" VerticalAlignment="Bottom" Width="7">
+                                                <Path Data="M1.5,1L1.5,6" Stroke="White"/>
+                                                <Path Data="M0.5,0L0.5,5" Stroke="{TemplateBinding Foreground}"/>
+                                                <Path Data="M3.5,0.5L7,3.5 4,6.5z" Fill="White"/>
+                                                <Path Data="M3,-0.5L6,2.5 3,5.5z" Fill="{TemplateBinding Foreground}"/>
+                                            </Canvas>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" TargetName="Bd" Value="#210080FF"/>
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" TargetName="Bd" Value="#210080FF"/>
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Foreground" Value="#FF6D6D6D"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding}" Value="true">
+                                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Height" TargetName="ToolBarThumb" Value="10"/>
+                <Setter Property="Width" TargetName="ToolBarThumb" Value="Auto"/>
+                <Setter Property="Margin" TargetName="ToolBarThumb" Value="-1,-3,0,0"/>
+                <Setter Property="Padding" TargetName="ToolBarThumb" Value="5,6,6,1"/>
+                <Setter Property="Margin" TargetName="ToolBarHeader" Value="0,0,0,4"/>
+                <Setter Property="Margin" TargetName="PART_ToolBarPanel" Value="1,0,2,2"/>
+                <Setter Property="DockPanel.Dock" TargetName="ToolBarThumb" Value="Top"/>
+                <Setter Property="DockPanel.Dock" TargetName="ToolBarHeader" Value="Top"/>
+                <Setter Property="HorizontalAlignment" TargetName="OverflowGrid" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" TargetName="OverflowGrid" Value="Bottom"/>
+                <Setter Property="Placement" TargetName="OverflowPopup" Value="Right"/>
+                <Setter Property="Margin" TargetName="MainPanelBorder" Value="0,0,0,11"/>
+                <Setter Property="Background" Value="#FFEEF5FD"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <!--#endregion-->
+    
+    <!--#region Menu-->
+
+    <!--=============Menu brushes=============-->
+    <SolidColorBrush x:Key="SoundboardMenuItemStyle.IsHighlighted.Background" Color="#8b8b8f"/>
+    <SolidColorBrush x:Key="SoundboardMenuItemStyle.IsHighlighted.BorderBrush" Color="#8b8b8f"/>
+
+    <!--=============SoundboardMenuStyle=============-->
+    <Style TargetType="{x:Type Menu}" x:Key="SoundboardMenuStyle">
+        <Setter Property="Background" Value="{StaticResource AppMenuBackground}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Menu}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--=============SoundboardMenuItemStyle=============-->
+    <Style TargetType="{x:Type MenuItem}" x:Key="SoundboardMenuItemStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Grid x:Name="Grid" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" ContentSource="Icon" HorizontalAlignment="Center" 
+                                              Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="Center" Width="16"/>
+                            
+                            <Path x:Name="GlyphPanel" Data="F1M10,1.2L4.7,9.1 4.5,9.1 0,5.2 1.3,3.5 4.3,6.1 8.3,0 10,1.2z" 
+                                  Fill="{TemplateBinding Foreground}" FlowDirection="LeftToRight" Margin="3" Visibility="Collapsed"
+                                  VerticalAlignment="Center"/>
+                           
+                            <ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                              Content="{TemplateBinding Header}" Grid.Column="1" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                           
+                            <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False"
+                                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom">
+                                <Border x:Name="SubMenuBorder" BorderBrush="#FF999999" BorderThickness="1"
+                                        Background="{StaticResource AppMenuBackground}" Padding="2">
+                                    <ScrollViewer x:Name="SubMenuScrollViewer" 
+                                                  Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                        <Grid x:Name="Grid1" RenderOptions.ClearTypeHint="Enabled">
+                                            <Canvas x:Name="Canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top"
+                                                    Width="0">
+                                                <Rectangle x:Name="OpaqueRect" 
+                                                           Fill="{Binding Background, ElementName=SubMenuBorder}" 
+                                                           Height="{Binding ActualHeight, ElementName=SubMenuBorder}" 
+                                                           Width="{Binding ActualWidth, ElementName=SubMenuBorder}"/>
+                                            </Canvas>
+                                            <!--Vertical line-->
+                                            <!--<Rectangle x:Name="Rectangle" Fill="#FFD7D7D7" HorizontalAlignment="Left" Margin="29,2,0,2" Width="1"/>-->
+                                            <ItemsPresenter x:Name="ItemsPresenter"
+                                                            KeyboardNavigation.DirectionalNavigation="Cycle" 
+                                                            Grid.IsSharedSizeScope="True"
+                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                            KeyboardNavigation.TabNavigation="Cycle"/>
+                                        </Grid>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                            <Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
+                        </Trigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource SoundboardMenuItemStyle.IsHighlighted.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource SoundboardMenuItemStyle.IsHighlighted.BorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#FF707070"/>
+                            <Setter Property="Fill" TargetName="GlyphPanel" Value="#FF707070"/>
+                        </Trigger>
+                        <Trigger Property="CanContentScroll" SourceName="SubMenuScrollViewer" Value="False">
+                            <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
+                            <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--=============SoundboardSubmenuItemStyle=============-->
+    <Style TargetType="{x:Type MenuItem}" x:Key="SoundboardSubmenuItemStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Grid Margin="-1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MinWidth="22" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto"/>
+                                <ColumnDefinition Width="13"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" ContentSource="Icon" HorizontalAlignment="Center" 
+                                              Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="Center" Width="16"/>
+                            <Border x:Name="GlyphPanel" Background="Transparent" Height="22" Margin="-1,0,0,0" 
+                                    Visibility="Hidden" VerticalAlignment="Center" Width="22">
+                                <Path x:Name="Glyph" Data="F1M10,1.2L4.7,9.1 4.5,9.1 0,5.2 1.3,3.5 4.3,6.1 8.3,0 10,1.2z" Fill="White"
+                                      FlowDirection="LeftToRight" Height="11" Width="9"/>
+                            </Border>
+                            <ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Grid.Column="2" 
+                                              ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="Left" 
+                                              Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="4" Margin="{TemplateBinding Padding}" Opacity="0.7" Text="{TemplateBinding InputGestureText}"
+                                       VerticalAlignment="Center"/>
+                            <Path x:Name="RightArrow" Grid.Column="5" Data="M0,0L4,3.5 0,7z" Fill="#FF212121" HorizontalAlignment="Left" 
+                                  Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" HorizontalOffset="-2" 
+                                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Right" VerticalOffset="-3">
+                                <Border x:Name="SubMenuBorder" BorderBrush="#FF999999" BorderThickness="1" Background="{StaticResource AppMenuBackground}"
+                                        Padding="2">
+                                    <ScrollViewer x:Name="SubMenuScrollViewer" 
+                                                  Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                        <Grid RenderOptions.ClearTypeHint="Enabled">
+                                            <Canvas HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                                <Rectangle x:Name="OpaqueRect" Fill="{Binding Background, ElementName=SubMenuBorder}" 
+                                                           Height="{Binding ActualHeight, ElementName=SubMenuBorder}"
+                                                           Width="{Binding ActualWidth, ElementName=SubMenuBorder}"/>
+                                            </Canvas>
+                                            <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle" 
+                                                            Grid.IsSharedSizeScope="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                            KeyboardNavigation.TabNavigation="Cycle"/>
+                                        </Grid>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                            <Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
+                        </Trigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource SoundboardMenuItemStyle.IsHighlighted.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource SoundboardMenuItemStyle.IsHighlighted.BorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#FF707070"/>
+                            <Setter Property="Fill" TargetName="Glyph" Value="#FF707070"/>
+                            <Setter Property="Fill" TargetName="RightArrow" Value="#FF707070"/>
+                        </Trigger>
+                        <Trigger Property="CanContentScroll" SourceName="SubMenuScrollViewer" Value="False">
+                            <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
+                            <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}"/>
+                        </Trigger>
+                        <Trigger Property="HasItems" Value="False">
+                            <Setter Property="Visibility" TargetName="RightArrow" Value="Collapsed"/>         
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+    
+
+</ResourceDictionary>

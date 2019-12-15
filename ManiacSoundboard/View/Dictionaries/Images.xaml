@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ManiacSoundboard">
+    
+    <BitmapImage x:Key="playIcon_1" UriSource="/View/Images/Icons/playIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="playWhiteIcon_1" UriSource="/View/Images/Icons/playWhiteIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="pauseIcon_1" UriSource="/View/Images/Icons/pauseIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="pauseWhiteIcon_1" UriSource="/View/Images/Icons/pauseWhiteIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="addMusicIcon_1" UriSource="/View/Images/Icons/addMusicIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="addMusicWhiteIcon_1" UriSource="/View/Images/Icons/addMusicWhiteIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="removeMusicIcon_1" UriSource="/View/Images/Icons/removeMusicIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="removeMusicWhiteIcon_1" UriSource="/View/Images/Icons/removeMusicWhiteIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="closeRedIcon_1" UriSource="/View/Images/Icons/closeRedIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="deleteAllIcon_1" UriSource="/View/Images/Icons/deleteAllIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="deleteAllWhiteIcon_1" UriSource="/View/Images/Icons/deleteAllWhiteIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="reloadIcon_1" UriSource="/View/Images/Icons/reloadIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="reloadWhiteIcon_1" UriSource="/View/Images/Icons/reloadWhiteIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="soundboardIcon_1" UriSource="/View/Images/Icons/soundboardIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="speakerIncreaseVolumeWhiteIcon_1" UriSource="/View/Images/Icons/speakerIncreaseVolumeWhiteIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="speakerDecreaseVolumeWhiteIcon_1" UriSource="/View/Images/Icons/speakerDecreaseVolumeWhiteIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="speakerMaxVolumeWhiteIcon_1" UriSource="/View/Images/Icons/speakerMaxVolumeWhiteIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+    <BitmapImage x:Key="muteSpeakerWhiteIcon_1" UriSource="/View/Images/Icons/muteSpeakerWhiteIcon_1.png" DecodePixelHeight="50" DecodePixelWidth="50" CacheOption="OnLoad"/>
+</ResourceDictionary>

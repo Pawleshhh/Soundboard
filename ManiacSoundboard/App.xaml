@@ -1,0 +1,32 @@
+﻿<Application x:Class="ManiacSoundboard.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ManiacSoundboard"
+             Startup="Application_Startup"
+             Exit="Application_Exit"
+             SessionEnding="Application_SessionEnding">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="View/Dictionaries/Fonts.xaml"/>
+                <ResourceDictionary Source="View/Dictionaries/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="View/Dictionaries/TextControlStyles.xaml"/>
+                <ResourceDictionary Source="View/Dictionaries/OtherControlStyles.xaml"/>
+                <ResourceDictionary Source="View/Dictionaries/ListViewStyles.xaml"/>
+                <ResourceDictionary Source="View/Dictionaries/WindowStyle.xaml"/>
+                <ResourceDictionary Source="View/Dictionaries/MenuStyles.xaml"/>
+                <ResourceDictionary Source="View/Dictionaries/SliderStyles.xaml"/>
+                <ResourceDictionary Source="View/Dictionaries/Images.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource AppButtonBaseStyle}"/>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource AppToolTip}"/>
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource ComboBoxDefaultStyle}"/>
+            <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource ComboBoxItemDefaultStyle}"/>
+
+            <BooleanToVisibilityConverter x:Key="bool2VisibConv"/>
+            <local:InverseBooleanToVisibilityConverter x:Key="inverseBool2VisibConv"/>
+            <local:BitmapImageToSourcePath x:Key="bitmapImg2UriSource"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

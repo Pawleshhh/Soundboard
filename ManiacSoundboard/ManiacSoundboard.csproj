@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D00E6A31-5958-4E91-8C05-FCE0F2507E0E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ManiacSoundboard</RootNamespace>
+    <AssemblyName>ManiacSoundboard</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>View\Images\Icons\soundboardIcon_1.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AudioSwitcher.AudioApi, Version=3.0.0.209, Culture=neutral, PublicKeyToken=fda5729e2db3a64f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AudioSwitcher.AudioApi.3.0.0\lib\net40\AudioSwitcher.AudioApi.dll</HintPath>
+    </Reference>
+    <Reference Include="AudioSwitcher.AudioApi.CoreAudio, Version=3.0.0.209, Culture=neutral, PublicKeyToken=fda5729e2db3a64f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AudioSwitcher.AudioApi.CoreAudio.3.0.0.1\lib\net40\AudioSwitcher.AudioApi.CoreAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="FileSignatures, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FileSignatures.4.0.0\lib\net461\FileSignatures.dll</HintPath>
+    </Reference>
+    <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.9.0\lib\net35\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenMcdf, Version=2.2.1.2, Culture=neutral, PublicKeyToken=fdbb1629d7c00800, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenMcdf.2.2.1.3\lib\net40\OpenMcdf.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\PresentationFramework.Aero2.1.0.1\lib\PresentationFramework.Aero2.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\..\Biblioteki\WPF\Interactitvity\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Model\Audio Service\Devices\EventArgs\DeviceNotificationEventArgs.cs" />
+    <Compile Include="Model\Audio Service\Devices\EventArgs\DeviceStateChangedEventArgs.cs" />
+    <Compile Include="Model\Audio Service\Devices\Interfaces\IAudioDeviceService.cs" />
+    <Compile Include="Model\Audio Service\Devices\Interfaces\IDeviceNotification.cs" />
+    <Compile Include="Model\Audio Service\Devices\MMRenderNotificationClient.cs" />
+    <Compile Include="Model\Audio Service\Interfaces\IPlayer.cs" />
+    <Compile Include="Model\Soundboard\Collections\SoundboardCacheCollection.cs" />
+    <Compile Include="Model\Soundboard\Interfaces\Soundboard.cs" />
+    <Compile Include="Model\Soundboard\SoundboardStaticSimpleFactory.cs" />
+    <Compile Include="ViewModel\Base\BaseViewModel.cs" />
+    <Compile Include="ViewModel\Base\ErrorHandler.cs" />
+    <Compile Include="ViewModel\Base\IViewModel.cs" />
+    <Compile Include="ViewModel\Helpers\Async\NotifyTaskCompletion.cs" />
+    <Compile Include="ViewModel\Helpers\Commands\RelayCommand.cs" />
+    <Compile Include="ViewModel\Helpers\ThreadSafe\IMainThreadWorker.cs" />
+    <Compile Include="ViewModel\Helpers\ThreadSafe\WpfMainThreadWorker.cs" />
+    <Compile Include="ViewModel\IO Service\AppServices.cs" />
+    <Compile Include="ViewModel\Configuration\AppConfiguration.cs" />
+    <Compile Include="ViewModel\Configuration\SoundboardViewModelConfiguration.cs" />
+    <Compile Include="ViewModel\IO Service\Dialogs\Dialog data structures\DialogResult.cs" />
+    <Compile Include="ViewModel\IO Service\Dialogs\Dialog data structures\MessageBoxButton.cs" />
+    <Compile Include="ViewModel\IO Service\Dialogs\Dialog data structures\MessageBoxImage.cs" />
+    <Compile Include="ViewModel\IO Service\Dialogs\Dialog data structures\MessageBoxResult.cs" />
+    <Compile Include="ViewModel\IO Service\Dialogs\File and folder dialogs\FileFolderHelper.cs" />
+    <Compile Include="ViewModel\IO Service\Dialogs\File and folder dialogs\IFileFolderDialogService.cs" />
+    <Compile Include="ViewModel\IO Service\Dialogs\File and folder dialogs\WpfAppFileFolderDialog.cs" />
+    <Compile Include="ViewModel\IO Service\File Formats\RecognizableFormats.cs" />
+    <Compile Include="ViewModel\IO Service\File Formats\Known formats\Mp3.cs" />
+    <Compile Include="ViewModel\IO Service\File Formats\Known formats\Mp3ID3v2.cs" />
+    <Compile Include="ViewModel\IO Service\File Formats\Known formats\Wav.cs" />
+    <Compile Include="ViewModel\IO Service\Dialogs\Message Boxes\IMessageBoxService.cs" />
+    <Compile Include="ViewModel\IO Service\Dialogs\Message Boxes\WpfAppMessageBox.cs" />
+    <Compile Include="ViewModel\IO Service\Xml\XmlSerializationService.cs" />
+    <Compile Include="ViewModel\IO Service\Xml\Interfaces\IXmlSerialization.cs" />
+    <Compile Include="ViewModel\IO Service\Xml\XmlHelper.cs" />
+    <Compile Include="ViewModel\View Models\MainViewModel.cs" />
+    <Compile Include="ViewModel\View Models\Soundboard\Soundboards\SoundboardKeyboardViewModel.cs" />
+    <Compile Include="ViewModel\View Models\Soundboard\Soundboards\SoundboardViewModel.cs" />
+    <Compile Include="ViewModel\View Models\Soundboard\Soundboards\SoundboardViewModelSimpleFactory.cs" />
+    <Compile Include="ViewModel\View Models\Soundboard\Sounds\SoundKeyboardViewModel.cs" />
+    <Compile Include="ViewModel\View Models\Soundboard\Sounds\SoundViewModel.cs" />
+    <Compile Include="View\Behaviors\ClosingWindowMenuItemBehavior.cs" />
+    <Compile Include="View\Behaviors\Helpers\BehaviorBase.cs" />
+    <Compile Include="View\Behaviors\PeriodicBindingUpdateBehavior.cs" />
+    <Compile Include="View\Behaviors\WindowStateBehavior.cs" />
+    <Compile Include="View\Controls\AudioPlayerUserControl.xaml.cs">
+      <DependentUpon>AudioPlayerUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\KeyBindingUserControl.xaml.cs">
+      <DependentUpon>KeyBindingUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\SimpleAudioPlayerUserControl.xaml.cs">
+      <DependentUpon>SimpleAudioPlayerUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\SoundAxisState.cs" />
+    <Compile Include="View\Controls\SoundAxisThumb.cs" />
+    <Compile Include="View\Controls\SoundTimeAxisUserControl.xaml.cs">
+      <DependentUpon>SoundTimeAxisUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Converters\BitmapImageToSourcePath.cs" />
+    <Compile Include="View\Converters\BorderThicknessToStrokeThickness.cs" />
+    <Compile Include="View\Converters\CeilTimeConverter.cs" />
+    <Compile Include="View\Converters\FormsKeyToWpfKeyConverter.cs" />
+    <Compile Include="View\Converters\FormsModifiersToWpfModifiersConverter.cs" />
+    <Compile Include="View\Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="View\Converters\KeyCombinationModifiersConverter.cs" />
+    <Compile Include="View\Converters\KeyCombinationTriggerKeyConverter.cs" />
+    <Compile Include="View\Converters\PlayerStateToSoundAxisStateConverter.cs" />
+    <Compile Include="View\Converters\PlayerStateToBooleanConverter.cs" />
+    <Compile Include="View\Converters\RoundVolumeConverter.cs" />
+    <Compile Include="View\Converters\TimeSpanToDoubleConverter.cs" />
+    <Compile Include="View\Converters\VolumeToPercentConverter.cs" />
+    <Page Include="View\Controls\SimpleAudioPlayerUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dictionaries\Fonts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dictionaries\Images.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dictionaries\MenuStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dictionaries\SliderStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\FormsWpfKeysHelper.cs" />
+    <Compile Include="Helpers\ObservedClass.cs" />
+    <Compile Include="View\Windows\AppBaseWindow.cs" />
+    <Compile Include="View\Windows\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\Controls\AudioPlayerUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\KeyBindingUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\SoundTimeAxisUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dictionaries\ButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Dictionaries\ListViewStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Dictionaries\OtherControlStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Dictionaries\TextControlStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Dictionaries\WindowStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\Audio Service\Devices\WaveDevices.cs" />
+    <Compile Include="Model\Audio Service\Devices\Interfaces\IAudioDevice.cs" />
+    <Compile Include="Model\Audio Service\Devices\WaveInDevice.cs" />
+    <Compile Include="Model\Audio Service\Devices\WaveOutDevice.cs" />
+    <Compile Include="Model\Audio Service\Players\WaveEventPlayer.cs" />
+    <Compile Include="Model\Binding\CombinationHelper.cs" />
+    <Compile Include="ViewModel\IO Service\Global Hook\GlobalKeyEvents.cs" />
+    <Compile Include="Model\Binding\IKeyBinding.cs" />
+    <Compile Include="Model\Binding\KeyCombination.cs" />
+    <Compile Include="Model\Soundboard\Collections\PausedPlayers.cs" />
+    <Compile Include="Model\Soundboard\Collections\PlayingPlayers.cs" />
+    <Compile Include="Model\Soundboard\Sound.cs" />
+    <Compile Include="Model\Soundboard\SoundboardWaveEvent.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Resource Include="View\Fonts\Lato\Lato-Black.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-BlackItalic.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-Bold.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-BoldItalic.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-Hairline.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-HairlineItalic.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-Heavy.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-HeavyItalic.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-Italic.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-Light.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-LightItalic.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-Medium.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-MediumItalic.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-Regular.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-Semibold.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-SemiboldItalic.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-Thin.ttf" />
+    <Resource Include="View\Fonts\Lato\Lato-ThinItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Images\Icons\soundboardIcon_1.ico" />
+    <Resource Include="View\Images\Icons\muteSpeakerWhiteIcon_1.png" />
+    <Resource Include="View\Images\Icons\closeRedIcon_1.png" />
+    <Resource Include="View\Images\Icons\speakerDecreaseVolumeWhiteIcon_1.png" />
+    <Resource Include="View\Images\Icons\speakerIncreaseVolumeWhiteIcon_1.png" />
+    <Resource Include="View\Images\Icons\pauseWhiteIcon_1.png" />
+    <Resource Include="View\Images\Icons\playWhiteIcon_1.png" />
+    <Resource Include="View\Images\Icons\addMusicWhiteIcon_1.png" />
+    <Resource Include="View\Images\Icons\deleteAllWhiteIcon_1.png" />
+    <Resource Include="View\Images\Icons\reloadWhiteIcon_1.png" />
+    <Resource Include="View\Images\Icons\removeMusicWhiteIcon_1.png" />
+    <Resource Include="View\Images\Icons\speakerMaxVolumeWhiteIcon_1.png" />
+    <Resource Include="View\Images\Icons\addMusicIcon_1.png" />
+    <Resource Include="View\Images\Icons\deleteAllIcon_1.png" />
+    <Resource Include="View\Images\Icons\removeMusicIcon_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Images\Icons\pauseIcon_1.png" />
+    <Resource Include="View\Images\Icons\playIcon_1.png" />
+    <Resource Include="View\Images\Icons\reloadIcon_1.png" />
+    <Resource Include="View\Images\Icons\soundboardIcon_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Configuration.xml" />
+    <Content Include="Helpers\Files\1sec.wav" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

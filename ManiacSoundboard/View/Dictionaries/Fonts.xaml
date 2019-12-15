@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ManiacSoundboard">
+    
+    <!--=============Lato=============-->
+    <FontFamily x:Key="LatoThin">pack://appliction;,,,/View/Fonts/Lato/#Lato Thin</FontFamily>
+    <FontFamily x:Key="LatoRegular">pack://appliction;,,,/View/Fonts/Lato/#Lato Regular</FontFamily>
+    <FontFamily x:Key="LatoMedium">pack://appliction;,,,/View/Fonts/Lato/#Lato Medium</FontFamily>
+    
+</ResourceDictionary>
