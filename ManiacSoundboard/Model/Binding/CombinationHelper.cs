@@ -4,6 +4,10 @@ using System.Windows.Forms;
 
 namespace ManiacSoundboard.Model
 {
+
+    /// <summary>
+    /// Provides functions to help with using <see cref="KeyCombination"/> type and <see cref="Keys"/> type.
+    /// </summary>
     public static class CombinationHelper
     {
 
