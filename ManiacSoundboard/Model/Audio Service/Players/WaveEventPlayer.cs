@@ -221,7 +221,7 @@ namespace ManiacSoundboard.Model
         {
             get
             {
-                
+                //Get the total time of one of the wave streams.
                 if (_firstWaveStream != null)
                     return _firstWaveStream.TotalTime;
                 else if (_secondWaveStream != null)
@@ -293,18 +293,24 @@ namespace ManiacSoundboard.Model
         /// </summary>
         public void Play()
         {
+            //Player is already playing so stop it and play it again.
             if (State == PlayerState.Playing) Stop();
+            
+            //Just in case
             if (CurrentTime >= TotalTime)
             {
                 Stop();
                 return;
             }
 
+            //If the first device is enabled then play the audio on it.
             if (IsFirstDeviceEnabled)
                 _firstPlayer.Play();
+            //Same with the second one
             if (IsSecondDeviceEnabled)
                 _secondPlayer.Play();
 
+            //Invoke the event
             OnAudioPlayed();
         }
 
@@ -313,13 +319,17 @@ namespace ManiacSoundboard.Model
         /// </summary>
         public void Pause()
         {
+            //Audio is not playing then audio cannot be paused.
             if (State != PlayerState.Playing) return;
 
+            //If the first device is enabled then pause audio on it
             if (IsFirstDeviceEnabled)
                 _firstPlayer.Pause();
+            //Same with the second one
             if (IsSecondDeviceEnabled)
                 _secondPlayer.Pause();
 
+            //Invoke the event
             OnAudioPaused();
         }
 
@@ -328,16 +338,24 @@ namespace ManiacSoundboard.Model
         /// </summary>
         public void Stop()
         {
+            //If the first device is enabled then stop the audio it plays.
             if (IsFirstDeviceEnabled)
                 _firstPlayer.Stop();
+            //Same with the second one
             if (IsSecondDeviceEnabled)
                 _secondPlayer.Stop();
 
+            //Set current time to 0
             CurrentTime = TimeSpan.FromSeconds(0);
 
+            //Invoke the event
             OnAudioStopped();
         }
 
+        /// <summary>
+        /// Sets the position (time) of the stored audio.
+        /// </summary>
+        /// <param name="seconds">Seconds in <see cref="double"/> type.</param>
         public void SetPosition(double seconds)
         {
             WaveStream strm;
@@ -351,6 +369,10 @@ namespace ManiacSoundboard.Model
             _SetPosition(strm, seconds);
         }
 
+        /// <summary>
+        /// Sets the position (time) of the stored audio.
+        /// </summary>
+        /// <param name="time">Time in <see cref="TimeSpan"/> type.</param>
         public void SetPosition(TimeSpan time)
         {
             WaveStream strm;
@@ -372,7 +394,8 @@ namespace ManiacSoundboard.Model
 
         public override bool Equals(object obj)
         {
-            if (obj is WaveEventPlayer audioPlayer) return AudioPath.Equals(audioPlayer.AudioPath);
+            if (obj is WaveEventPlayer audioPlayer) 
+                return AudioPath.Equals(audioPlayer.AudioPath);
 
             return false;
         }
