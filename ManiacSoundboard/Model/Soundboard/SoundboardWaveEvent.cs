@@ -269,36 +269,6 @@ namespace ManiacSoundboard.Model
             volume = 0.3f;
         }
 
-        private void _SetupSound(IPlayer player)
-        {
-            player.FirstDevice = FirstDevice;
-            player.SecondDevice = SecondDevice;
-            player.IsFirstDeviceEnabled = IsFirstDeviceEnabled;
-            player.IsSecondDeviceEnabled = IsSecondDeviceEnabled;
-            //sound.BoundData.Volume = Volume;
-
-            player.AudioPlayed += Player_AudioPlayed;
-            player.AudioPaused += Player_AudioPaused;
-            //player.AudioStopped += Player_AudioStopped;
-        }
-
-        private void _DisposeSound(IPlayer player)
-        {
-            player.AudioPlayed -= Player_AudioPlayed;
-            player.AudioPaused -= Player_AudioPaused;
-            player.Dispose();
-        }
-
-        private void Player_AudioPlayed(object sender, EventArgs e)
-        {
-            _playingPlayers.Add((IPlayer)sender);
-        }
-
-        private void Player_AudioPaused(object sender, EventArgs e)
-        {
-            _pausedPlayers.Add((IPlayer)sender);
-        }
-
         #endregion
 
     }

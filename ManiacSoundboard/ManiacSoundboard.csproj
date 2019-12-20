@@ -53,6 +53,9 @@
   <PropertyGroup>
     <ApplicationIcon>View\Images\Icons\soundboardIcon_1.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ManiacSoundboard.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AudioSwitcher.AudioApi, Version=3.0.0.209, Culture=neutral, PublicKeyToken=fda5729e2db3a64f, processorArchitecture=MSIL">
       <HintPath>..\packages\AudioSwitcher.AudioApi.3.0.0\lib\net40\AudioSwitcher.AudioApi.dll</HintPath>
@@ -87,6 +90,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
@@ -120,10 +124,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </Page>
     <Compile Include="Model\Audio Service\Devices\EventArgs\DeviceNotificationEventArgs.cs" />
     <Compile Include="Model\Audio Service\Devices\EventArgs\DeviceStateChangedEventArgs.cs" />
     <Compile Include="Model\Audio Service\Devices\Interfaces\IAudioDeviceService.cs" />
@@ -133,6 +137,7 @@
     <Compile Include="Model\Soundboard\Collections\SoundboardCacheCollection.cs" />
     <Compile Include="Model\Soundboard\Interfaces\Soundboard.cs" />
     <Compile Include="Model\Soundboard\SoundboardStaticSimpleFactory.cs" />
+    <Compile Include="SingleInstance.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\ErrorHandler.cs" />
     <Compile Include="ViewModel\Base\IViewModel.cs" />

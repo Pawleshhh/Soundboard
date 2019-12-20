@@ -3,14 +3,49 @@ using System.Windows;
 using System.IO;
 using System;
 using ManiacSoundboard.ViewModel;
+using Microsoft.Shell;
+using System.Collections.Generic;
 
 namespace ManiacSoundboard
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : Application, ISingleInstanceApp
     {
+
+        private const string Unique = "Maniac Soundboard";
+
+        [STAThread]
+        public static void Main()
+        {
+            if (SingleInstance<App>.InitializeAsFirstInstance(Unique))
+            {
+                var application = new App();
+                application.InitializeComponent();
+                application.Run();
+
+                // Allow single instance code to perform cleanup operations
+                SingleInstance<App>.Cleanup();
+            }
+        }
+
+        #region ISingleInstanceApp Members
+
+        public bool SignalExternalCommandLineArgs(IList<string> args)
+        {
+            // Bring window to foreground
+            if (this.MainWindow.WindowState == WindowState.Minimized)
+            {
+                this.MainWindow.WindowState = WindowState.Normal;
+            }
+
+            this.MainWindow.Activate();
+
+            return true;
+        }
+
+        #endregion
 
         private IViewModel _mainViewModel;
 
