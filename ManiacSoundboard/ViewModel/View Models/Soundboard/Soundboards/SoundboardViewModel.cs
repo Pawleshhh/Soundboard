@@ -212,7 +212,7 @@ namespace ManiacSoundboard.ViewModel
         public bool IsChangingDevice
         {
             get => isChangingDevice;
-            set
+            protected set
             {
                 isChangingDevice = value;
 
