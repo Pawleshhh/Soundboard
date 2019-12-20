@@ -269,7 +269,6 @@
     <Compile Include="Model\Audio Service\Players\WaveEventPlayer.cs" />
     <Compile Include="Model\Binding\CombinationHelper.cs" />
     <Compile Include="ViewModel\IO Service\Global Hook\GlobalKeyEvents.cs" />
-    <Compile Include="Model\Binding\IKeyBinding.cs" />
     <Compile Include="Model\Binding\KeyCombination.cs" />
     <Compile Include="Model\Soundboard\Collections\PausedPlayers.cs" />
     <Compile Include="Model\Soundboard\Collections\PlayingPlayers.cs" />

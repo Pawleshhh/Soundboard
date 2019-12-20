@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 
 namespace ManiacSoundboard.Model
 {
+
     public class KeyCombination : IEquatable<KeyCombination>
     {
 
@@ -39,7 +40,7 @@ namespace ManiacSoundboard.Model
         #region Properties
 
         public Keys TriggerKey { get; private set; } = Keys.None;
-
+        
         public IReadOnlyCollection<Keys> Modifiers => _modifiers;
 
         #endregion
@@ -92,10 +93,6 @@ namespace ManiacSoundboard.Model
         {
             return string.Join("+", _modifiers.Concat(Enumerable.Repeat(TriggerKey, 1)));
         }
-
-        #endregion
-
-        #region Private methdos
 
         #endregion
 
