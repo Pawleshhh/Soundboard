@@ -237,7 +237,7 @@ namespace ManiacSoundboard.Model
 
         #region Private methods
 
-        private void _SetupSound(IPlayer player)
+        protected virtual void _SetupSound(IPlayer player)
         {
             player.InitPlayer();
             player.FirstDevice = FirstDevice;
@@ -251,19 +251,19 @@ namespace ManiacSoundboard.Model
             //player.AudioStopped += Player_AudioStopped;
         }
 
-        private void _DisposeSound(IPlayer player)
+        protected virtual void _DisposeSound(IPlayer player)
         {
             player.AudioPlayed -= Player_AudioPlayed;
             player.AudioPaused -= Player_AudioPaused;
             player.Dispose();
         }
 
-        private void Player_AudioPlayed(object sender, EventArgs e)
+        protected virtual void Player_AudioPlayed(object sender, EventArgs e)
         {
             _playingPlayers.Add((IPlayer)sender);
         }
 
-        private void Player_AudioPaused(object sender, EventArgs e)
+        protected virtual void Player_AudioPaused(object sender, EventArgs e)
         {
             _pausedPlayers.Add((IPlayer)sender);
         }
