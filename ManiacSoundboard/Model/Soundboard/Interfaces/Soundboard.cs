@@ -73,21 +73,10 @@ namespace ManiacSoundboard.Model
         /// </summary>
         public abstract float Volume { get; set; }
 
-        private float volumeStep;
-
         /// <summary>
         /// Gets or sets volume step of de/increasing soundboard's volume.
         /// </summary>
-        public float VolumeStep
-        {
-            get => volumeStep;
-            set
-            {
-                if (value > 1f) volumeStep = 1f;
-                else if (value < 0f) volumeStep = 0f;
-                else volumeStep = value;
-            }
-        }
+        public abstract float VolumeStep { get; set; }
 
         /// <summary>
         /// Gets or sets whether the soundboard is muted or not.

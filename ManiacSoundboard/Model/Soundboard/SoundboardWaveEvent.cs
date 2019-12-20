@@ -147,6 +147,19 @@ namespace ManiacSoundboard.Model
             }
         }
 
+        private float volumeStep;
+
+        public override float VolumeStep
+        {
+            get => volumeStep;
+            set
+            {
+                if (value > 1f) volumeStep = 1f;
+                else if (value < 0f) volumeStep = 0f;
+                else volumeStep = value;
+            }
+        }
+
         private bool isMuted;
 
         public override bool IsMuted
