@@ -609,7 +609,7 @@ namespace ManiacSoundboard.ViewModel
         {
             string path = r.ReadElementContentAsString(nameof(SoundViewModel.AudioPath), "");
 
-            var fileExistsResult = CheckIfFileExists(path, $"File {path} does not exist.", "File not found", MessageBoxButton.OK, MessageBoxImage.Warning);
+            var fileExistsResult = CheckIfFileExists(path, $"File {path} could not be found.", "File not found", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             if (!fileExistsResult.exists)
                 return null;
