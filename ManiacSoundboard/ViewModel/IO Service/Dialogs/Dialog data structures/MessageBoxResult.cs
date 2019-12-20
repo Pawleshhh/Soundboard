@@ -1,6 +1,10 @@
 ﻿
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Possbile results of user message boxes.
+    /// </summary>
     public enum MessageBoxResult
     {
         None = 0,

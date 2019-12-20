@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Windows;
 
-/// <summary>
-/// Interface to represent every view model of this application.
-/// </summary>
-public interface IViewModel : IDisposable
+namespace ManiacSoundboard.ViewModel
 {
-
     /// <summary>
-    /// Gets the owner of this view model.
+    /// Interface to represent every view model of this application.
     /// </summary>
-    IViewModel Owner { get; }
+    public interface IViewModel : IDisposable
+    {
 
-    /// <summary>
-    /// Gets the error handler of this view model.
-    /// </summary>
-    ErrorHandler ErrorHandler { get; }
+        /// <summary>
+        /// Gets the owner of this view model.
+        /// </summary>
+        IViewModel Owner { get; }
 
-    void WhenClosing();
+        /// <summary>
+        /// Gets the error handler of this view model.
+        /// </summary>
+        ErrorHandler ErrorHandler { get; }
 
+        void WhenClosing();
+
+    }
 }

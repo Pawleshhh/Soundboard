@@ -5,6 +5,9 @@ using System.Collections.Generic;
 namespace ManiacSoundboard.Model
 {
 
+    /// <summary>
+    /// Stores all players that are currently paused.
+    /// </summary>
     public class PausedPlayers : SoundboardCacheCollection
     {
 

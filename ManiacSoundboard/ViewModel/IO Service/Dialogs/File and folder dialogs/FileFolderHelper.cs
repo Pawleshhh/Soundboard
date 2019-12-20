@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Static class to help working with <see cref="IFileFolderDialogService"/>.
+    /// </summary>
     public static class FileFolderHelper
     {
 

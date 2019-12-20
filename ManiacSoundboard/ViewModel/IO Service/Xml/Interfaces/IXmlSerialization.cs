@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ManiacSoundboard.ViewModel
 {
-    
+ 
+    /// <summary>
+    /// Helper interface for xml serialization that sets data for specified objects.
+    /// </summary>
     public interface IXmlWritableSerialization
     {
 
@@ -14,6 +17,9 @@ namespace ManiacSoundboard.ViewModel
 
     }
 
+    /// <summary>
+    /// Helper interface for xml serialization that loads data from specified objects.
+    /// </summary>
     public interface IXmlReadableSerialization
     {
 
@@ -21,6 +27,9 @@ namespace ManiacSoundboard.ViewModel
 
     }
 
+    /// <summary>
+    /// Helper interface for xml serialization that loads data from and sets for specified objects.
+    /// </summary>
     public interface IXmlSerialization : IXmlReadableSerialization, IXmlWritableSerialization
     {
 

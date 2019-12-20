@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Provides information about formats that are recognizable by this application.
+    /// </summary>
     public static class RecognizableFormats
     {
 

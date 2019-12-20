@@ -5,6 +5,9 @@ using Gma.System.MouseKeyHook;
 namespace ManiacSoundboard.ViewModel
 {
 
+    /// <summary>
+    /// Detects global key events.
+    /// </summary>
     public class GlobalKeyEvents : IDisposable
     {
 

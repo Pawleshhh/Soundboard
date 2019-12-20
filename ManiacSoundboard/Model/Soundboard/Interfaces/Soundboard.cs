@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace ManiacSoundboard.Model
 {
+
+    /// <summary>
+    /// Abstract class that defines main model of soundboard.
+    /// </summary>
     public abstract class Soundboard : IDisposable
     {
 
@@ -10,7 +14,6 @@ namespace ManiacSoundboard.Model
 
         protected Soundboard()
         {
-
             allPlayers = new List<IPlayer>(MaxSize);
             _playingPlayers = new PlayingPlayers(MaxSize);
             _pausedPlayers = new PausedPlayers(MaxSize);
@@ -30,24 +33,51 @@ namespace ManiacSoundboard.Model
 
         #region Properties
 
+        /// <summary>
+        /// Gets <see cref="IAudioDeviceService"/> that is associated with soundboard's api.
+        /// </summary>
         public abstract IAudioDeviceService AudioDevices { get; protected set; }
 
+        /// <summary>
+        /// Gets max amount of players that can be stored in the soundboard.
+        /// </summary>
         public static int MaxSize { get; } = 100;
 
+        /// <summary>
+        /// Gets collection of all players.
+        /// </summary>
         public IReadOnlyList<IPlayer> AllPlayers => allPlayers;
 
+        /// <summary>
+        /// Gets or sets whether the first device is enabled or not.
+        /// </summary>
         public abstract bool IsFirstDeviceEnabled { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether the second device is enabled or not.
+        /// </summary>
         public abstract bool IsSecondDeviceEnabled { get; set; }
 
+        /// <summary>
+        /// Gets or sets the first device.
+        /// </summary>
         public abstract IAudioDevice FirstDevice { get; set; }
 
+        /// <summary>
+        /// Gets or sets the second device.
+        /// </summary>
         public abstract IAudioDevice SecondDevice { get; set; }
 
+        /// <summary>
+        /// Gets or sets volume of soundboard.
+        /// </summary>
         public abstract float Volume { get; set; }
 
         private float volumeStep;
 
+        /// <summary>
+        /// Gets or sets volume step of de/increasing soundboard's volume.
+        /// </summary>
         public float VolumeStep
         {
             get => volumeStep;
@@ -59,14 +89,24 @@ namespace ManiacSoundboard.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether the soundboard is muted or not.
+        /// </summary>
         public abstract bool IsMuted { get; set; }
 
+        /// <summary>
+        /// Gets whether any player is playing or not.
+        /// </summary>
         public bool IsPlaying => _playingPlayers.Count > 0;
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Adds new player by path to audio file.
+        /// </summary>
+        /// <param name="path">Path to audio file.</param>
         public void AddSound(string path)
         {
             IPlayer player = GetPlayer(path);
@@ -74,30 +114,50 @@ namespace ManiacSoundboard.Model
             allPlayers.Add(player);
         }
 
+        /// <summary>
+        /// Adds multiple players by given paths to audio files.
+        /// </summary>
+        /// <param name="paths">Paths to audio files.</param>
         public void AddRangeOfSounds(IEnumerable<string> paths)
         {
             foreach (var path in paths)
                 AddSound(path);
         }
 
+        /// <summary>
+        /// Adds player.
+        /// </summary>
+        /// <param name="player">Player to be added.</param>
         public void AddSound(IPlayer player)
         {
             _SetupSound(player);
             allPlayers.Add(player);
         }
 
+        /// <summary>
+        /// Adds multiple players.
+        /// </summary>
+        /// <param name="players">Collection of players to be added.</param>
         public void AddRangeOfSounds(IEnumerable<IPlayer> players)
         {
             foreach (var sound in players)
                 AddSound(sound);
         }
 
+        /// <summary>
+        /// Removes given player.
+        /// </summary>
+        /// <param name="player">Player to be removed.</param>
         public void RemoveSound(IPlayer player)
         {
             _DisposeSound(player);
             allPlayers.Remove(player);
         }
 
+        /// <summary>
+        /// Removes range of players.
+        /// </summary>
+        /// <param name="players">Players to be removed.</param>
         public void RemoveRangeOfSounds(IEnumerable<IPlayer> players)
         {
             foreach (var sound in players)
@@ -107,6 +167,9 @@ namespace ManiacSoundboard.Model
             }
         }
 
+        /// <summary>
+        /// Removes all players.
+        /// </summary>
         public void RemoveAllSounds()
         {
             StopAll();
@@ -114,26 +177,31 @@ namespace ManiacSoundboard.Model
             allPlayers.Clear();
         }
 
+        /// <summary>
+        /// Plays all paused players.
+        /// </summary>
         public void PlayPaused()
         {
             while (_pausedPlayers.Count > 0)
             {
                 _pausedPlayers[0].Play();
             }
-            //foreach (AudioPlayer player in _pausedPlayers)
-            //    player.Play();
         }
 
+        /// <summary>
+        /// Pauses all playing players.
+        /// </summary>
         public void PauseAll()
         {
             while (_playingPlayers.Count > 0)
             {
                 _playingPlayers[0].Pause();
             }
-            //foreach (AudioPlayer player in _playingPlayers)
-            //    player.Pause();
         }
 
+        /// <summary>
+        /// Stops all playing and paused players.
+        /// </summary>
         public void StopAll()
         {
             while (_playingPlayers.Count > 0)
@@ -147,18 +215,31 @@ namespace ManiacSoundboard.Model
             }
         }
 
+        /// <summary>
+        /// Increases <see cref="Volume"/> by <see cref="VolumeStep"/>/
+        /// </summary>
         public void IncreaseVolume()
         {
             Volume += VolumeStep;
         }
 
+        /// <summary>
+        /// Decreases <see cref="Volume"/> by <see cref="VolumeStep"/>/
+        /// </summary>
         public void DecreaseVolume()
         {
             Volume -= VolumeStep;
         }
 
+        /// <summary>
+        /// Gets player that is associated with the implementation of this soundboard.
+        /// </summary>
+        /// <param name="path">Path of the audio file.</param>
         public abstract IPlayer GetPlayer(string path);
 
+        /// <summary>
+        /// Gets audio service thath is associated with the implementation of this soundboard.
+        /// </summary>
         public abstract IAudioDeviceService GetDeviceService();
 
         public abstract void Dispose();

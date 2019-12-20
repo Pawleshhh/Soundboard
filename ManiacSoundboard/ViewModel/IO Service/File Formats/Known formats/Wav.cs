@@ -2,6 +2,10 @@
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Wav file format.
+    /// </summary>
     public class Wav : FileFormat
     {
 

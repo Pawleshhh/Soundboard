@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Possible results of user dialogs.
+    /// </summary>
     public enum DialogResult
     {
         None = 0,

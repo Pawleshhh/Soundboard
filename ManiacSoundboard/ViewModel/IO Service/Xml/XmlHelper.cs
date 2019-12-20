@@ -9,6 +9,10 @@ using System.Xml;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Helper class to work with xml data.
+    /// </summary>
     public static class XmlHelper
     {
 

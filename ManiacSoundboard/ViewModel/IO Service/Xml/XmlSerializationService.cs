@@ -8,6 +8,10 @@ using System.Xml.Serialization;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Global application's service of xml serialization.
+    /// </summary>
     public static class XmlSerializationService
     {
 
@@ -15,6 +19,13 @@ namespace ManiacSoundboard.ViewModel
         {
         }
 
+        /// <summary>
+        /// Serializes specified object. When succeeded file is saved in the current directory or in specified path. 
+        /// </summary>
+        /// <typeparam name="T">Type of the object to serialize.</typeparam>
+        /// <param name="toSerialize">Object to be serialized.</param>
+        /// <param name="fileName">Name of the xml file where object will be serialized or full path of the mentioned file.</param>
+        /// <param name="isFileNameFullPath">Indicates if filename parameter is a name of the file or a full path. The default value of it is false.</param>
         public static void Serialize<T>(T toSerialize, string fileName, bool isFileNameFullPath = false)
         {
             string fullPath;
@@ -29,6 +40,13 @@ namespace ManiacSoundboard.ViewModel
                 xmlSerializer.Serialize(s, toSerialize);
         }
 
+        /// <summary>
+        /// Deserializes specified object.
+        /// </summary>
+        /// <typeparam name="T">Type of the object to deserialize.</typeparam>
+        /// <param name="toSerialize">Object to be deserialized.</param>
+        /// <param name="fileName">Name of the xml file where object will be deserialized from or full path of the mentioned file.</param>
+        /// <param name="isFileNameFullPath">Indicates if filename parameter is a name of the file or a full path. The default value of it is false.</param>
         public static T Deserialize<T>(string fileName, bool isFileNameFullPath = false)
         {
             string fullPath;

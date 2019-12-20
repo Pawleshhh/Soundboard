@@ -6,16 +6,26 @@ using System.Collections;
 
 namespace ManiacSoundboard.Model
 {
+    /// <summary>
+    /// Abstract class that defines cache collection of players.
+    /// </summary>
     public abstract class SoundboardCacheCollection : IList<IPlayer>, IDisposable
     {
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes new instance of <see cref="SoundboardCacheCollection"/> class.
+        /// </summary>
         protected SoundboardCacheCollection()
         {
             _list = new List<IPlayer>();
         }
 
+        /// <summary>
+        /// Initializes new instance of <see cref="SoundboardCacheCollection"/> class.
+        /// </summary>
+        /// <param name="capacity">Capacity of this collection.</param>
         protected SoundboardCacheCollection(int capacity)
         {
             _list = new List<IPlayer>(capacity);
@@ -25,8 +35,14 @@ namespace ManiacSoundboard.Model
 
         #region Private & protected fields
 
+        /// <summary>
+        /// Cache lock for safe reading and writing to list of players.
+        /// </summary>
         protected readonly ReaderWriterLockSlim cacheLock = new ReaderWriterLockSlim();
 
+        /// <summary>
+        /// List of players.
+        /// </summary>
         protected readonly List<IPlayer> _list;
 
         #endregion
@@ -172,8 +188,16 @@ namespace ManiacSoundboard.Model
 
         #region Private & protected methods
 
+        /// <summary>
+        /// Unsubscribes events from <see cref="IPlayer"/> that this collection stores.
+        /// </summary>
+        /// <param name="player">Player with events to be unsubscribed.</param>
         protected abstract void DissentSound(IPlayer player);
 
+        /// <summary>
+        /// Subscribes events from <see cref="IPlayer"/> that this collection stores.
+        /// </summary>
+        /// <param name="player">Player with events to be subscribed.</param>
         protected abstract void SubscribeSound(IPlayer player);
 
         private IPlayer _Read(int index)

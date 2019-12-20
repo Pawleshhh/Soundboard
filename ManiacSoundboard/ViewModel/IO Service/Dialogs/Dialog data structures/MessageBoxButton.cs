@@ -1,5 +1,8 @@
 ﻿namespace ManiacSoundboard.ViewModel
 {
+    /// <summary>
+    /// Possible buttons on user message box.
+    /// </summary>
     public enum MessageBoxButton
     {
         OK = 0,

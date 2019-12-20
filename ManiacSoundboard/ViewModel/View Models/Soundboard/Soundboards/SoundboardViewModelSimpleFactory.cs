@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Simple singleton factory to create specified implementations of <see cref="SoundboardViewModel"/>.
+    /// </summary>
     public class SoundboardViewModelSimpleFactory
     {
 

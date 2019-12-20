@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Stores all app services.
+    /// </summary>
     public static class AppServices
     {
 

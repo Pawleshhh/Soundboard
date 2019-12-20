@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace ManiacSoundboard.Model
 {
+
+    /// <summary>
+    /// Implementation of <see cref="Soundboard"/> that uses <see cref="WaveOutEvent"/> from NAudio library to play sounds.
+    /// </summary>
     public class SoundboardWaveEvent : Soundboard
     {
 

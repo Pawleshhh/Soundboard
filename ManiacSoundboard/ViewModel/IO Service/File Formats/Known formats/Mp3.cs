@@ -2,6 +2,10 @@
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Mp3 file format.
+    /// </summary>
     public class Mp3 : FileFormat
     {
 

@@ -10,6 +10,10 @@ using System.Xml.Serialization;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Main view model of this application.
+    /// </summary>
     [XmlRoot(ElementName = "ManiacSoundboard")]
     public class MainViewModel : BaseViewModel, IXmlSerializable
     {

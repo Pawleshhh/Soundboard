@@ -3,6 +3,10 @@ using System.Windows.Input;
 
 namespace ManiacSoundboard
 {
+
+    /// <summary>
+    /// Thumb used on sound axis.
+    /// </summary>
     public class SoundAxisThumb : Thumb
     {
 

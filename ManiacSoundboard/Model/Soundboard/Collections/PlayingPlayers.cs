@@ -6,6 +6,9 @@ using System.Threading;
 namespace ManiacSoundboard.Model
 {
 
+    /// <summary>
+    /// Stores all players that are currently playing.
+    /// </summary>
     public class PlayingPlayers : SoundboardCacheCollection
     {
 

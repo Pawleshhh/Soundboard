@@ -4,6 +4,11 @@ using System.Windows.Interactivity;
 
 namespace ManiacSoundboard
 {
+
+    /// <summary>
+    /// Base class for all behaviors used in this application.
+    /// </summary>
+    /// <typeparam name="T">Type of specified <see cref="FrameworkElement"/>.</typeparam>
     public abstract class BehaviorBase<T> : Behavior<T> where T : FrameworkElement
     {
         private bool _isSetup = true;

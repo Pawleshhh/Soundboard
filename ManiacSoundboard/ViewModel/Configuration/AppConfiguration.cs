@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Stores configurations of this application written in Configuration.xml file.
+    /// </summary>
     public static class AppConfiguration
     {
 
@@ -14,6 +18,9 @@ namespace ManiacSoundboard.ViewModel
             Configurations = XmlSerializationService.ReadDataFromXml(Properties.Resources.Configuration, "Configuration");
         }
 
+        /// <summary>
+        /// Gets dictionary of configurations.
+        /// </summary>
         public static IReadOnlyDictionary<string, string> Configurations { get; private set; }
 
     }

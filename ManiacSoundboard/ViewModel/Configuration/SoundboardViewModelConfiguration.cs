@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Creates objects needed to create configured <see cref="SoundboardViewModel"/>. This class is made in singleton pattern.
+    /// </summary>
     public class SoundboardViewModelConfiguration
     {
 

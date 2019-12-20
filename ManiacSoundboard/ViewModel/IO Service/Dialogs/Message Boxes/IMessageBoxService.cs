@@ -1,6 +1,10 @@
 ﻿
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Defines interface of message box service.
+    /// </summary>
     public interface IMessageBoxService
     {
 

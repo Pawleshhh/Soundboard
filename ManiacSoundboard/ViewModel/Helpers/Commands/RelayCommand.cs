@@ -2,51 +2,54 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-public class RelayCommand : ICommand
+namespace ManiacSoundboard.ViewModel
 {
-    #region Fields
-
-    readonly Action<object> _execute;
-
-    readonly Predicate<object> _canExecute;
-
-    #endregion //Fields
-
-    #region Constructor
-
-    public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
+    public class RelayCommand : ICommand
     {
-        if (execute == null) throw new ArgumentNullException("execute");
-        _execute = execute;
-        _canExecute = canExecute;
-    }
+        #region Fields
 
-    #endregion //Constructor
+        readonly Action<object> _execute;
 
-    #region ICommand Members
+        readonly Predicate<object> _canExecute;
 
-    [DebuggerStepThrough]
-    public bool CanExecute(object parameter)
-    {
-        return _canExecute == null ? true : _canExecute(parameter);
-    }
+        #endregion //Fields
 
-    public event EventHandler CanExecuteChanged
-    {
-        add
+        #region Constructor
+
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
-            if (_canExecute != null) CommandManager.RequerySuggested += value;
+            if (execute == null) throw new ArgumentNullException("execute");
+            _execute = execute;
+            _canExecute = canExecute;
         }
-        remove
+
+        #endregion //Constructor
+
+        #region ICommand Members
+
+        [DebuggerStepThrough]
+        public bool CanExecute(object parameter)
         {
-            if (_canExecute != null) CommandManager.RequerySuggested -= value;
+            return _canExecute == null ? true : _canExecute(parameter);
         }
-    }
 
-    public void Execute(object parameter)
-    {
-        _execute(parameter);
-    }
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                if (_canExecute != null) CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                if (_canExecute != null) CommandManager.RequerySuggested -= value;
+            }
+        }
 
-    #endregion //ICommand Members
+        public void Execute(object parameter)
+        {
+            _execute(parameter);
+        }
+
+        #endregion //ICommand Members
+    }
 }

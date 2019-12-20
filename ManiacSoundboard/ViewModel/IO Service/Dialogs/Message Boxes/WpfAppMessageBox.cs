@@ -2,6 +2,10 @@
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Specified implementation of <see cref="IMessageBoxService"/> for WPF framework.
+    /// </summary>
     public class WpfAppMessageBox : IMessageBoxService
     {
 

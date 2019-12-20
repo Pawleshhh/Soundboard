@@ -16,6 +16,9 @@ using System.Xml.Serialization;
 namespace ManiacSoundboard.ViewModel
 {
 
+    /// <summary>
+    /// Base class of the soundboard view model.
+    /// </summary>
     public class SoundboardViewModel : BaseViewModel, IXmlSerializable
     {
 
@@ -72,6 +75,9 @@ namespace ManiacSoundboard.ViewModel
 
         private bool isSimpleSoundboardEnabled;
 
+        /// <summary>
+        /// Gets or sets whether the simple soundboard is enabled or not.
+        /// </summary>
         public bool IsSimpleSoundboardEnabled
         {
             get => isSimpleSoundboardEnabled;
@@ -82,10 +88,19 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets task with <see cref="ObservableCollection{T}"/> that stores all <see cref="SoundViewModel"/>s.
+        /// </summary>
         public NotifyTaskCompletion<ObservableCollection<SoundViewModel>> Sounds { get; private set; }
 
+        /// <summary>
+        /// Gets all audio devices.
+        /// </summary>
         public ObservableCollection<IAudioDevice> AllDevices { get; private set; } = new ObservableCollection<IAudioDevice>();
 
+        /// <summary>
+        /// Gets or sets the first audio device.
+        /// </summary>
         public IAudioDevice FirstDevice
         {
             get => _soundboard.FirstDevice;
@@ -95,6 +110,9 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets or sets the second audio device.
+        /// </summary>
         public IAudioDevice SecondDevice
         {
             get => _soundboard.SecondDevice;
@@ -104,6 +122,9 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether the first device is enabled or not.
+        /// </summary>
         public bool IsFirstDeviceEnabled
         {
             get => _soundboard.IsFirstDeviceEnabled;
@@ -114,6 +135,9 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether the second device is enabled or not.
+        /// </summary>
         public bool IsSecondDeviceEnabled
         {
             get => _soundboard.IsSecondDeviceEnabled;
@@ -124,6 +148,9 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets or sets volume of the soundboard.
+        /// </summary>
         public float Volume
         {
             get => _soundboard.Volume;
@@ -135,6 +162,9 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets or sets the volume step of in/decreasing volume.
+        /// </summary>
         public float VolumeStep
         {
             get => _soundboard.VolumeStep;
@@ -145,6 +175,9 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether the soundboard is muted or not.
+        /// </summary>
         public bool IsMuted
         {
             get => _soundboard.IsMuted;
@@ -156,14 +189,26 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets whether any player is playing or not.
+        /// </summary>
         public bool IsPlaying => _soundboard.IsPlaying;
 
+        /// <summary>
+        /// Gets whether soundboard view model is busy with some task.
+        /// </summary>
         public bool IsBusy => IsChangingDevice || (Sounds != null && Sounds.IsNotCompleted);
 
+        /// <summary>
+        /// Gets negated value of <see cref="IsBusy"/>.
+        /// </summary>
         public bool IsNotBusy => !IsBusy;
 
         private bool isChangingDevice = false;
 
+        /// <summary>
+        /// Gets whether devices are changing or not.
+        /// </summary>
         public bool IsChangingDevice
         {
             get => isChangingDevice;
@@ -180,27 +225,43 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets negated value of <see cref="IsChangingDevice"/>.
+        /// </summary>
         public bool IsNotChangingDevice => !IsChangingDevice;
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Play paused players.
+        /// </summary>
         public void PlayPaused()
         {
             _soundboard.PlayPaused();
         }
 
+        /// <summary>
+        /// Pauses all playing players.
+        /// </summary>
         public void PauseAll()
         {
             _soundboard.PauseAll();
         }
 
+        /// <summary>
+        /// Stops all playing/paused players.
+        /// </summary>
         public void StopAll()
         {
             _soundboard.StopAll();
         }
 
+        /// <summary>
+        /// Adds sounds by paths to audio files asynchronously.
+        /// </summary>
+        /// <param name="paths">Array of paths to audio files.</param>
         public void AddSoundsByPaths(string[] paths)
         {
             _prevCount = Sounds.Result.Count;
@@ -209,6 +270,10 @@ namespace ManiacSoundboard.ViewModel
             OnPropertyChanged("Sounds");
         }
 
+        /// <summary>
+        /// Removes sounds asynchronously.
+        /// </summary>
+        /// <param name="sounds">Sounds to be removed.</param>
         public void RemoveSounds(params SoundViewModel[] sounds)
         {
             _prevCount = Sounds.Result.Count;
@@ -217,6 +282,9 @@ namespace ManiacSoundboard.ViewModel
             OnPropertyChanged("Sounds");
         }
 
+        /// <summary>
+        /// Remove all sounds asynchronously.
+        /// </summary>
         public void ClearSounds()
         {
             StopAll();
@@ -225,6 +293,9 @@ namespace ManiacSoundboard.ViewModel
             OnPropertyChanged("Sounds");
         }
 
+        /// <summary>
+        /// Reloads <see cref="AllDevices"/> asynchronously.
+        /// </summary>
         public async void ReloadDevices()
         {
             StopAll();
@@ -234,6 +305,10 @@ namespace ManiacSoundboard.ViewModel
             OnPropertyChanged("FirstDevice", "SecondDevice", "AllDevices", "IsFirstDeviceEnabled", "IsSecondDeviceEnabled");
         }
 
+        /// <summary>
+        /// Sets <see cref="FirstDevice"/> asynchronously.
+        /// </summary>
+        /// <param name="device">Device to be set.</param>
         public async void SetFirstDevice(IAudioDevice device)
         {
             StopAll();
@@ -243,6 +318,10 @@ namespace ManiacSoundboard.ViewModel
             OnPropertyChanged("FirstDevice");
         }
 
+        /// <summary>
+        /// Sets <see cref="SecondDevice"/> asynchronously.
+        /// </summary>
+        /// <param name="device">Device to be set.</param>
         public async void SetSecondDevice(IAudioDevice device)
         {
             StopAll();
@@ -252,18 +331,29 @@ namespace ManiacSoundboard.ViewModel
             OnPropertyChanged("SecondDevice");
         }
 
+        /// <summary>
+        /// Increases <see cref="Volume"/> by <see cref="VolumeStep"/>.
+        /// </summary>
         public void IncreaseVolume()
         {
             _soundboard.IncreaseVolume();
             OnPropertyChanged("Volume");
         }
 
+        /// <summary>
+        /// Decreases <see cref="Volume"/> by <see cref="VolumeStep"/>.
+        /// </summary>
         public void DecreaseVolume()
         {
             _soundboard.DecreaseVolume();
             OnPropertyChanged("Volume");
         }
 
+        /// <summary>
+        /// Gets implementation of <see cref="SoundViewModel"/> specified by implementation of this soundboard view model.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public virtual SoundViewModel GetSoundViewModel(IPlayer player)
         {
             return new SoundViewModel(player, this);
@@ -275,15 +365,18 @@ namespace ManiacSoundboard.ViewModel
             _soundboard = null;
         }
 
-        public IPlayer GetPlayer(string path)
-        {
-            return _soundboard.GetPlayer(path);
-        }
+        //public IPlayer GetPlayer(string path)
+        //{
+        //    return _soundboard.GetPlayer(path);
+        //}
 
         #endregion
 
         #region Private methods
 
+        /// <summary>
+        /// Gets task that reloads devices.
+        /// </summary>
         protected Task ReloadDevicesAsync()
         {
             return Task.Run(() =>
@@ -292,6 +385,9 @@ namespace ManiacSoundboard.ViewModel
             });
         }
 
+        /// <summary>
+        /// Reloads devices synchronously.
+        /// </summary>
         protected void _ReloadDevices()
         {
             var prevFirstDevice = FirstDevice;
@@ -318,10 +414,16 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets task that adds sounds by paths to audio files.
+        /// </summary>
+        /// <param name="previous">Already stored sounds.</param>
+        /// <param name="paths">Paths to the new sounds.</param>
         protected Task<ObservableCollection<SoundViewModel>> AddSoundsByPathsAsync(List<SoundViewModel> previous, params string[] paths)
         {
             return Task.Run(() =>
             {
+                //j variable is for checking if the MaxSize is not exceeded
                 for (int i = 0, j = 0; i < paths.Length; i++, j++)
                 {
                     if (j + 1 + _prevCount > Soundboard.MaxSize)
@@ -365,6 +467,11 @@ namespace ManiacSoundboard.ViewModel
             });
         }
 
+        /// <summary>
+        /// Gets task that removes given sounds.
+        /// </summary>
+        /// <param name="previous">Already stored sounds.</param>
+        /// <param name="sounds">Sounds to be removed.</param>
         protected Task<ObservableCollection<SoundViewModel>> RemoveSoundsAsync(List<SoundViewModel> previous, params SoundViewModel[] sounds)
         {
             return Task.Run(() =>
@@ -382,6 +489,9 @@ namespace ManiacSoundboard.ViewModel
             });
         }
 
+        /// <summary>
+        /// Gets task that removes all sounds from the collection.
+        /// </summary>
         protected Task<ObservableCollection<SoundViewModel>> ClearAllSoundsAsync()
         {
             return Task.Run(() =>
@@ -391,16 +501,27 @@ namespace ManiacSoundboard.ViewModel
             });
         }
 
+        /// <summary>
+        /// Updates sounds collection from model synchronously.
+        /// </summary>
         protected ObservableCollection<SoundViewModel> UpdateSounds()
         {
             return new ObservableCollection<SoundViewModel>(_soundboard.AllPlayers.Select(n => GetSoundViewModel(n)));
         }
 
+        /// <summary>
+        /// Gets task that updates sounds collection from model.
+        /// </summary>
         protected Task<ObservableCollection<SoundViewModel>> UpdateSoundsAsync()
         {
             return Task.Run(() => UpdateSounds());
         }
 
+        /// <summary>
+        /// Helper method to work safely on the collection of sounds asynchronously.
+        /// </summary>
+        /// <param name="task">Task to be done on collection.</param>
+        /// <param name="disposeSounds">Indicates whether all already stored sounds must be disposed or not.</param>
         protected void WorkOnSoundCollection(Task<ObservableCollection<SoundViewModel>> task, bool disposeSounds = false)
         {
             if (disposeSounds && Sounds != null && Sounds.Result != null)
@@ -413,11 +534,18 @@ namespace ManiacSoundboard.ViewModel
             OnPropertyChanged("IsBusy", "IsNotBusy");
         }
 
+        /// <summary>
+        /// Method that rises when any task stopped working.
+        /// </summary>
         protected virtual void Sounds_Finished()
         {
             OnPropertyChanged("IsBusy", "IsNotBusy", "Sounds");
         }
 
+        /// <summary>
+        /// Checks if file exists and if not then informs user about it by message box.
+        /// </summary>
+        /// <returns></returns>
         protected (bool exists, MessageBoxResult result) CheckIfFileExists(string path, string info, string caption, MessageBoxButton button, MessageBoxImage image)
         {
             if (!File.Exists(path))
@@ -430,6 +558,9 @@ namespace ManiacSoundboard.ViewModel
             return (true, MessageBoxResult.None);
         }
 
+        /// <summary>
+        /// Checks if file format is recognizable (and if file is not locked). If file is not recognizable then it informs user about it by message box.
+        /// </summary>
         protected (bool recognizableAndUnlocked, MessageBoxResult result) CheckIfFileFormatIsRecognizable(string path, string info, string caption, MessageBoxButton button, MessageBoxImage image)
         {
             try
@@ -456,6 +587,9 @@ namespace ManiacSoundboard.ViewModel
             return (true, MessageBoxResult.None);
         }
 
+        /// <summary>
+        /// Method subscribed to the audio device service. Rises when anything associated with the audio devices changed.
+        /// </summary>
         private void Client_DevicesChanged(object sender, EventArgs e)
         {
             ReloadDevices();
@@ -468,6 +602,9 @@ namespace ManiacSoundboard.ViewModel
             return null;
         }
 
+        /// <summary>
+        /// Gets specified implementation of <see cref="SoundViewModel"/> from xml file.
+        /// </summary>
         protected virtual SoundViewModel GetSoundViewModelFromXml(XmlReader r)
         {
             string path = r.ReadElementContentAsString(nameof(SoundViewModel.AudioPath), "");
@@ -490,6 +627,9 @@ namespace ManiacSoundboard.ViewModel
             return soundVM;
         }
 
+        /// <summary>
+        /// Initializes the collection of sounds from xml file.
+        /// </summary>
         protected void InitializeSoundsCollectionFromXml(XmlReader r)
         {
             bool isEmpty = r.IsEmptyElement;
@@ -525,6 +665,9 @@ namespace ManiacSoundboard.ViewModel
             //</Sounds>
         }
 
+        /// <summary>
+        /// Reads xml settings specified by the implementation of <see cref="SoundboardViewModel"/>.
+        /// </summary>
         protected virtual void ReadXmlSettings(XmlReader r)
         {
             //<Settings>
@@ -540,6 +683,10 @@ namespace ManiacSoundboard.ViewModel
 
         }
 
+        /// <summary>
+        /// Reads data from xml file.
+        /// </summary>
+        /// <param name="r"></param>
         public void ReadXml(XmlReader r)
         {
             //<Soundboard>
@@ -550,6 +697,9 @@ namespace ManiacSoundboard.ViewModel
             //</Soundboard>
         }
 
+        /// <summary>
+        /// Writes to xml file settings specified by the implementation of <see cref="SoundboardViewModel"/>.
+        /// </summary>
         protected virtual void WriteXmlSettings(XmlWriter w)
         {
             //<Settings>
@@ -595,6 +745,9 @@ namespace ManiacSoundboard.ViewModel
             //</Settings>
         }
 
+        /// <summary>
+        /// Writes data to xml file.
+        /// </summary>
         public void WriteXml(XmlWriter w)
         {
             WriteXmlSettings(w);

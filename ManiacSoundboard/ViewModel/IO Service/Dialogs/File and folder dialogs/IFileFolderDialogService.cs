@@ -1,5 +1,9 @@
 ﻿namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Defines interface of file folder dialog service.
+    /// </summary>
     public interface IFileFolderDialogService
     {
         (string Path, DialogResult Result) OpenSingleFile();

@@ -10,6 +10,10 @@ using System.Xml;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Extends <see cref="SoundboardViewModel"/> by associating soundboard with keyboard keys.
+    /// </summary>
     public sealed class SoundboardKeyboardViewModel : SoundboardViewModel
     {
 
@@ -50,6 +54,9 @@ namespace ManiacSoundboard.ViewModel
 
         private bool handlesKeyEvents;
 
+        /// <summary>
+        /// Gets or sets whether key events are being handled or not.
+        /// </summary>
         public bool HandlesKeyEvents
         {
             get => handlesKeyEvents;
@@ -62,6 +69,9 @@ namespace ManiacSoundboard.ViewModel
 
         private KeyCombination playPausedKey;
 
+        /// <summary>
+        /// Gets or sets key combination of playing paused players.
+        /// </summary>
         public KeyCombination PlayPausedKey
         {
             get => playPausedKey;
@@ -74,6 +84,9 @@ namespace ManiacSoundboard.ViewModel
 
         private KeyCombination pauseKey;
 
+        /// <summary>
+        /// Gets or sets key combination of pausing playing players.
+        /// </summary>
         public KeyCombination PauseKey
         {
             get => pauseKey;
@@ -86,6 +99,9 @@ namespace ManiacSoundboard.ViewModel
 
         private KeyCombination stopKey;
 
+        /// <summary>
+        /// Gets or sets key combination of stopping all players.
+        /// </summary>
         public KeyCombination StopKey
         {
             get => stopKey;
@@ -98,6 +114,9 @@ namespace ManiacSoundboard.ViewModel
 
         private KeyCombination muteVolumeKey;
 
+        /// <summary>
+        /// Gets or sets key combination of muting soundboard.
+        /// </summary>
         public KeyCombination MuteVolumeKey
         {
             get => muteVolumeKey;
@@ -110,6 +129,9 @@ namespace ManiacSoundboard.ViewModel
 
         private KeyCombination increaseVolumeKey;
 
+        /// <summary>
+        /// Gets or sets key combination of increasing volume.
+        /// </summary>
         public KeyCombination IncreaseVolumeKey
         {
             get => increaseVolumeKey;
@@ -122,6 +144,9 @@ namespace ManiacSoundboard.ViewModel
 
         private KeyCombination decreaseVolumeKey;
 
+        /// <summary>
+        /// Gets or sets key combination of decreasing volume.
+        /// </summary>
         public KeyCombination DecreaseVolumeKey
         {
             get => decreaseVolumeKey;
@@ -135,11 +160,17 @@ namespace ManiacSoundboard.ViewModel
 
         #region Methods
 
+        /// <summary>
+        /// Gets specified implementation of <see cref="SoundViewModel"/> associated with this soundboard view model.
+        /// </summary>
         public override SoundViewModel GetSoundViewModel(IPlayer player)
         {
             return new SoundKeyboardViewModel(player, this);
         }
 
+        /// <summary>
+        /// Gets specified implementation of <see cref="SoundViewModel"/> from xml file.
+        /// </summary>
         protected override SoundViewModel GetSoundViewModelFromXml(XmlReader r)
         {
             var soundVM = (SoundKeyboardViewModel)base.GetSoundViewModelFromXml(r);
@@ -152,6 +183,9 @@ namespace ManiacSoundboard.ViewModel
             return soundVM;
         }
 
+        /// <summary>
+        /// Reads xml settings specified by the implementation of <see cref="SoundboardViewModel"/>.
+        /// </summary>
         protected override void ReadXmlSettings(XmlReader r)
         {
             base.ReadXmlSettings(r);
@@ -169,6 +203,9 @@ namespace ManiacSoundboard.ViewModel
             //</KeyBindings>
         }
 
+        /// <summary>
+        /// Writes to xml file settings specified by the implementation of <see cref="SoundboardViewModel"/>.
+        /// </summary>
         protected override void WriteXmlSettings(XmlWriter w)
         {
             base.WriteXmlSettings(w);
@@ -229,6 +266,10 @@ namespace ManiacSoundboard.ViewModel
         #endregion
 
         #region Private methods
+
+        /// <summary>
+        /// Method subscribed to the <see cref="GlobalKeyEvents.KeyDown"/> event.
+        /// </summary>
         private void _globalKeyEvents_KeyDown(object sender, Gma.System.MouseKeyHook.KeyEventArgsExt e)
         {
             if (!HandlesKeyEvents || IsBusy) return;

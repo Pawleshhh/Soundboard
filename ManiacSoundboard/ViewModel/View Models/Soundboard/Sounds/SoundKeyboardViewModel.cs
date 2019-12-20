@@ -10,6 +10,10 @@ using System.Xml.Serialization;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Extends <see cref="SoundViewModel"/> with data associated with keyboard keys.
+    /// </summary>
     public sealed class SoundKeyboardViewModel : SoundViewModel, IEquatable<SoundKeyboardViewModel>
     {
 
@@ -36,6 +40,9 @@ namespace ManiacSoundboard.ViewModel
 
         private Keys key;
 
+        /// <summary>
+        /// Gets or sets trigger key.
+        /// </summary>
         public Keys Key
         {
             get => key;
@@ -49,6 +56,9 @@ namespace ManiacSoundboard.ViewModel
 
         private Keys modifiers;
 
+        /// <summary>
+        /// Gets or sets modifiers.
+        /// </summary>
         public Keys Modifiers
         {
             get => modifiers;
@@ -60,12 +70,18 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets key combination from <see cref="Key"/> and <see cref="Modifiers"/> properties.
+        /// </summary>
         public KeyCombination Combination { get; private set; }
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Helper method to specify if this view model is associated with some data.
+        /// </summary>
         public override bool IsAssociatedWith(object data)
         {
             return Combination != null && Combination.Equals(data);

@@ -12,6 +12,9 @@ using System.Xml.Serialization;
 namespace ManiacSoundboard.ViewModel
 {
 
+    /// <summary>
+    /// Base class of sound view model.
+    /// </summary>
     public class SoundViewModel : BaseViewModel, IEquatable<SoundViewModel>, IXmlReadableSerialization
     {
 
@@ -46,8 +49,14 @@ namespace ManiacSoundboard.ViewModel
 
         private IPlayer Player { get; set; }
 
+        /// <summary>
+        /// Gets audio path.
+        /// </summary>
         public string AudioPath => Player.AudioPath;
 
+        /// <summary>
+        /// Gets or sets current time of current player.
+        /// </summary>
         public TimeSpan CurrentTime
         {
             get
@@ -64,14 +73,29 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets total time of audio.
+        /// </summary>
         public TimeSpan TotalTime => Player.TotalTime;
 
+        /// <summary>
+        /// Gets state of the player.
+        /// </summary>
         public PlayerState State => Player.State;
 
+        /// <summary>
+        /// Gets whether the player is playing or not.
+        /// </summary>
         public bool IsPlaying => Player.State == PlayerState.Playing ? true : false;
 
+        /// <summary>
+        /// Gets whether the player is paused or not.
+        /// </summary>
         public bool IsPaused => Player.State == PlayerState.Paused ? true : false;
 
+        /// <summary>
+        /// Gets or sets the tag name of the player.
+        /// </summary>
         public string TagName
         {
             get => Player.TagName;
@@ -86,21 +110,33 @@ namespace ManiacSoundboard.ViewModel
 
         #region Methods
 
+        /// <summary>
+        /// Plays audio.
+        /// </summary>
         public void Play()
         {
             Player.Play();
         }
 
+        /// <summary>
+        /// Pauses audio.
+        /// </summary>
         public void Pause()
         {
             Player.Pause();
         }
 
+        /// <summary>
+        /// Stops audio.
+        /// </summary>
         public void Stop()
         {
             Player.Stop();
         }
 
+        /// <summary>
+        /// Helper method to specify if this view model is associated with some data.
+        /// </summary>
         public virtual bool IsAssociatedWith(object data)
         {
             return false;
@@ -149,29 +185,6 @@ namespace ManiacSoundboard.ViewModel
             return settings;
         }
 
-        //public virtual XmlSchema GetSchema()
-        //{
-        //    return null;
-        //}
-
-        //public virtual void ReadXml(XmlReader reader)
-        //{
-        //    var soundboard = (SoundboardViewModel)Owner;
-
-        //    reader.ReadStartElement();
-
-        //    string path = reader.ReadElementContentAsString("Path", "");
-        //    string tag = reader.ReadElementContentAsString("TagName", "");
-
-        //    reader.ReadEndElement();
-        //}
-
-        //public virtual void WriteXml(XmlWriter writer)
-        //{
-        //    writer.WriteElementString("Path", AudioPath);
-        //    writer.WriteAttributeString("TagName", TagName);
-        //}
-
         #endregion
 
         #region Private methods
@@ -210,6 +223,9 @@ namespace ManiacSoundboard.ViewModel
 
         private ICommand playCommand;
 
+        /// <summary>
+        /// Gets command that plays audio or pauses it if it's already playing.
+        /// </summary>
         public ICommand PlayCommand
         {
             get
@@ -229,6 +245,9 @@ namespace ManiacSoundboard.ViewModel
 
         private ICommand playStopCommand;
 
+        /// <summary>
+        /// Gets command that plays audio or stops it if it's already playing.
+        /// </summary>
         public ICommand PlayStopCommand
         {
             get
@@ -248,6 +267,9 @@ namespace ManiacSoundboard.ViewModel
 
         private ICommand pauseCommand;
 
+        /// <summary>
+        /// Gets command that pauses audio or plays it if it's already paused.
+        /// </summary>
         public ICommand PauseCommand
         {
             get
@@ -267,6 +289,9 @@ namespace ManiacSoundboard.ViewModel
 
         private ICommand stopCommand;
 
+        /// <summary>
+        /// Gets command that stops audio.
+        /// </summary>
         public ICommand StopCommand
         {
             get
@@ -285,6 +310,9 @@ namespace ManiacSoundboard.ViewModel
 
         #region Static methods
 
+        /// <summary>
+        /// Gets player from given <see cref="SoundViewModel"/>.
+        /// </summary>
         public static IPlayer GetPlayer(SoundViewModel soundVM)
         {
             return soundVM.Player;

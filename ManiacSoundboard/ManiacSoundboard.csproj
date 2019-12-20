@@ -138,8 +138,6 @@
     <Compile Include="ViewModel\Base\IViewModel.cs" />
     <Compile Include="ViewModel\Helpers\Async\NotifyTaskCompletion.cs" />
     <Compile Include="ViewModel\Helpers\Commands\RelayCommand.cs" />
-    <Compile Include="ViewModel\Helpers\ThreadSafe\IMainThreadWorker.cs" />
-    <Compile Include="ViewModel\Helpers\ThreadSafe\WpfMainThreadWorker.cs" />
     <Compile Include="ViewModel\IO Service\AppServices.cs" />
     <Compile Include="ViewModel\Configuration\AppConfiguration.cs" />
     <Compile Include="ViewModel\Configuration\SoundboardViewModelConfiguration.cs" />
@@ -275,7 +273,6 @@
     <Compile Include="Model\Binding\KeyCombination.cs" />
     <Compile Include="Model\Soundboard\Collections\PausedPlayers.cs" />
     <Compile Include="Model\Soundboard\Collections\PlayingPlayers.cs" />
-    <Compile Include="Model\Soundboard\Sound.cs" />
     <Compile Include="Model\Soundboard\SoundboardWaveEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

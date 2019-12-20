@@ -1,11 +1,11 @@
-﻿using FileSignatures;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace ManiacSoundboard.ViewModel
 {
+
+    /// <summary>
+    /// Specified implementation of <see cref="IFileFolderDialogService"/> for WPF framework.
+    /// </summary>
     public class WpfAppFileFolderDialog : IFileFolderDialogService
     {
 

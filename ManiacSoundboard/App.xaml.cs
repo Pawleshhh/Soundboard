@@ -2,6 +2,7 @@
 using System.Windows;
 using System.IO;
 using System;
+using ManiacSoundboard.ViewModel;
 
 namespace ManiacSoundboard
 {

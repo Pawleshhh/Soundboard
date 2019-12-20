@@ -112,6 +112,10 @@ namespace ManiacSoundboard.Model
             return TriggerKey.GetHashCode() * ToString().GetHashCode() * 7;
         }
 
+        /// <summary>
+        /// Gets string from key combination in Modifier1 + ... + ModifierN + TriggerKey format.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return string.Join("+", _modifiers.Concat(Enumerable.Repeat(TriggerKey, 1)));
@@ -156,11 +160,8 @@ namespace ManiacSoundboard.Model
         }
 
         /// <summary>
-        /// Return
+        /// Returns given trigger key and modifiers as string in Modifer1 + ... + ModifierN + TriggerKey format.
         /// </summary>
-        /// <param name="triggerKey"></param>
-        /// <param name="modifiers"></param>
-        /// <returns></returns>
         public static string StringFromKeys(Keys triggerKey, Keys modifiers)
         {
             if (triggerKey == Keys.None) return string.Empty;

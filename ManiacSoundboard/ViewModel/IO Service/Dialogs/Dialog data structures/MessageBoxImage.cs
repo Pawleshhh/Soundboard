@@ -1,6 +1,9 @@
 ﻿
 namespace ManiacSoundboard.ViewModel
 {
+    /// <summary>
+    /// Possible images/icons on user message box.
+    /// </summary>
     public enum MessageBoxImage
     {
         None = 0,
