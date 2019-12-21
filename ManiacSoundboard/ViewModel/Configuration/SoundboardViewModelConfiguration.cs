@@ -39,7 +39,7 @@ namespace ManiacSoundboard.ViewModel
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Could not load settings from configuration file.", ex);
+                throw new InvalidOperationException($"Could not load settings from configuration file. ({ex.Message})", ex);
             }
         }
 

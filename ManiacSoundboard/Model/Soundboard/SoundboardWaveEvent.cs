@@ -40,6 +40,10 @@ namespace ManiacSoundboard.Model
 
         private WaveOutEvent _secondDevice;
 
+        private object _firstDeviceLocker = new object();
+
+        private object _secondDeviceLocker = new object();
+
         #endregion
 
         #region Properites
@@ -217,31 +221,37 @@ namespace ManiacSoundboard.Model
 
         private void _InitializeFirstDevice()
         {
-            if (FirstDevice != null)
+            lock(_firstDeviceLocker)
             {
-                _firstDevice?.Dispose();
-                _firstDevice = new WaveOutEvent
+                if (FirstDevice != null)
                 {
-                    DeviceNumber = FirstDevice.DeviceId
-                };
+                    _firstDevice?.Dispose();
+                    _firstDevice = new WaveOutEvent
+                    {
+                        DeviceNumber = FirstDevice.DeviceId
+                    };
 
-                _firstDevice.Init(_blankWav);
-                _firstDevice.Volume = Volume;
+                    _firstDevice.Init(_blankWav);
+                    _firstDevice.Volume = Volume;
+                }
             }
         }
 
         private void _InitializeSecondDevice()
         {
-            if (SecondDevice != null)
+            lock(_secondDeviceLocker)
             {
-                _secondDevice?.Dispose();
-                _secondDevice = new WaveOutEvent
+                if (SecondDevice != null)
                 {
-                    DeviceNumber = SecondDevice.DeviceId
-                };
+                    _secondDevice?.Dispose();
+                    _secondDevice = new WaveOutEvent
+                    {
+                        DeviceNumber = SecondDevice.DeviceId
+                    };
 
-                _secondDevice.Init(_blankWav);
-                _secondDevice.Volume = Volume;
+                    _secondDevice.Init(_blankWav);
+                    _secondDevice.Volume = Volume;
+                }
             }
         }
 

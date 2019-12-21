@@ -63,8 +63,8 @@ namespace ManiacSoundboard
             }
             catch (Exception ex)
             {
-                var result = vm.AppServices.MessageBoxService.ShowMessageBoxDecision("soundboardData.xml file is not properly written so saved settings and data weren't loaded. Do you want to see the details?",
-                                                                        "Loading data from file error", vm.MessageBoxButton.YesNo, vm.MessageBoxImage.Error);
+                var result = vm.AppServices.MessageBoxService.ShowMessageBoxDecision("Some problem occurred when application was starting to run. Do you want to see the details?",
+                                                                        "Problem with starting.", vm.MessageBoxButton.YesNo, vm.MessageBoxImage.Error);
 
                 if (result == vm.MessageBoxResult.Yes)
                     vm.AppServices.MessageBoxService.ShowMessageBox(ex.Message, "Details", vm.MessageBoxImage.Information);
