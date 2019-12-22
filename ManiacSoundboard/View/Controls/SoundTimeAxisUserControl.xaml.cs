@@ -78,54 +78,54 @@ namespace ManiacSoundboard
             set { SetValue(SoundStateProperty, value); }
         }
 
-        public static readonly DependencyProperty PauseCommandProperty =
-            DependencyProperty.Register("PauseCommand", typeof(ICommand), typeof(SoundTimeAxisUserControl));
+        public static readonly DependencyProperty PlayPauseCommandProperty =
+            DependencyProperty.Register("PlayPauseCommand", typeof(ICommand), typeof(SoundTimeAxisUserControl));
 
         /// <summary>
-        /// Gets or sets the pause command.
+        /// Gets or sets the play pause command.
         /// </summary>
-        public ICommand PauseCommand
+        public ICommand PlayPauseCommand
         {
-            get { return (ICommand)GetValue(PauseCommandProperty); }
-            set { SetValue(PauseCommandProperty, value); }
+            get { return (ICommand)GetValue(PlayPauseCommandProperty); }
+            set { SetValue(PlayPauseCommandProperty, value); }
         }
 
-        public static readonly DependencyProperty StartCommandProperty =
-            DependencyProperty.Register("StartCommand", typeof(ICommand), typeof(SoundTimeAxisUserControl));
+        //public static readonly DependencyProperty StartCommandProperty =
+        //    DependencyProperty.Register("StartCommand", typeof(ICommand), typeof(SoundTimeAxisUserControl));
 
-        /// <summary>
-        /// Gets or sets the start command.
-        /// </summary>
-        public ICommand StartCommand
-        {
-            get { return (ICommand)GetValue(StartCommandProperty); }
-            set { SetValue(StartCommandProperty, value); }
-        }
+        ///// <summary>
+        ///// Gets or sets the start command.
+        ///// </summary>
+        //public ICommand StartCommand
+        //{
+        //    get { return (ICommand)GetValue(StartCommandProperty); }
+        //    set { SetValue(StartCommandProperty, value); }
+        //}
 
-        public static readonly DependencyProperty StopCommandProperty =
-            DependencyProperty.Register("StopCommand", typeof(ICommand), typeof(SoundTimeAxisUserControl));
+        //public static readonly DependencyProperty StopCommandProperty =
+        //    DependencyProperty.Register("StopCommand", typeof(ICommand), typeof(SoundTimeAxisUserControl));
 
-        /// <summary>
-        /// Gets or sets the stop command.
-        /// </summary>
-        public ICommand StopCommand
-        {
-            get { return (ICommand)GetValue(StopCommandProperty); }
-            set { SetValue(StopCommandProperty, value); }
-        }
+        ///// <summary>
+        ///// Gets or sets the stop command.
+        ///// </summary>
+        //public ICommand StopCommand
+        //{
+        //    get { return (ICommand)GetValue(StopCommandProperty); }
+        //    set { SetValue(StopCommandProperty, value); }
+        //}
 
         private void Slider_DragStarted(object sender, DragStartedEventArgs e)
         {
             //BindingOperations.GetBindingExpression(this, SoundStateProperty)?.UpdateTarget();
 
             if (SoundState == SoundAxisState.Playing)
-                PauseCommand?.Execute(null);
+                PlayPauseCommand?.Execute(DataContext);
         }
 
         private void Slider_DragCompleted(object sender, DragCompletedEventArgs e)
         {
             if (SoundState == SoundAxisState.Paused)
-                StartCommand?.Execute(null);
+                PlayPauseCommand?.Execute(DataContext);
         }
 
         private void Thumb_MouseEnter(object sender, MouseEventArgs e)

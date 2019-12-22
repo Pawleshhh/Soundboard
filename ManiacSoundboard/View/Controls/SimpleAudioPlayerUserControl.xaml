@@ -10,7 +10,11 @@
              BorderThickness="2"
              x:Name="simpleAudioPlayerUserControl"
              BorderBrush="#6e0101"
-             Foreground="Black">
+             Foreground="Black"
+             CurrentTime="{Binding ElementName=audioPlayerUserControl, Path=DataContext.CurrentTime, Mode=TwoWay}"
+             TotalTime="{Binding ElementName=audioPlayerUserControl, Path=DataContext.TotalTime, Mode=OneWay}"
+             TriggerKey="{Binding ElementName=audioPlayerUserControl, Path=DataContext.Key, Mode=TwoWay, Converter={StaticResource formsKeyToWpf}}"
+             Modifiers="{Binding ElementName=audioPlayerUserControl, Path=DataContext.Modifiers, Mode=TwoWay, Converter={StaticResource formsModToWpfMod}}">
 
     <!--=============Resources=============-->
     <UserControl.Resources>

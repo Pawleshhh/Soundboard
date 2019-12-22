@@ -27,6 +27,10 @@
             <BooleanToVisibilityConverter x:Key="bool2VisibConv"/>
             <local:InverseBooleanToVisibilityConverter x:Key="inverseBool2VisibConv"/>
             <local:BitmapImageToSourcePath x:Key="bitmapImg2UriSource"/>
+            <local:FormsKeyToWpfKeyConverter x:Key="formsKeyToWpf"/>
+            <local:FormsModifiersToWpfModifiersConverter x:Key="formsModToWpfMod"/>
+            <local:PlayerStateToBooleanConverter x:Key="plStateToBoolConv"/>
+            <local:PlayerStateToSoundAxisStateConverter x:Key="plStateToAxisStateConv"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

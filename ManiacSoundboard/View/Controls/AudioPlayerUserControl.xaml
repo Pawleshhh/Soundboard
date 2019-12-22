@@ -10,15 +10,14 @@
              BorderThickness="2"
              x:Name="audioPlayerUserControl"
              BorderBrush="#6e0101"
-             Foreground="Black">
+             Foreground="Black"
+             CurrentTime="{Binding ElementName=audioPlayerUserControl, Path=DataContext.CurrentTime, Mode=TwoWay}"
+             TotalTime="{Binding ElementName=audioPlayerUserControl, Path=DataContext.TotalTime, Mode=OneWay}"
+             TriggerKey="{Binding ElementName=audioPlayerUserControl, Path=DataContext.Key, Mode=TwoWay, Converter={StaticResource formsKeyToWpf}}"
+             Modifiers="{Binding ElementName=audioPlayerUserControl, Path=DataContext.Modifiers, Mode=TwoWay, Converter={StaticResource formsModToWpfMod}}">
 
     <!--=============Resources=============-->
     <UserControl.Resources>
-
-        <local:FormsKeyToWpfKeyConverter x:Key="formsKeyToWpf"/>
-        <local:FormsModifiersToWpfModifiersConverter x:Key="formsModToWpfMod"/>
-        <local:PlayerStateToBooleanConverter x:Key="plStateToBoolConv"/>
-        <local:PlayerStateToSoundAxisStateConverter x:Key="plStateToAxisStateConv"/>
 
     </UserControl.Resources>
 
@@ -104,9 +103,7 @@
                                         TotalTime="{Binding TotalTime}"
                                         SoundState="{Binding State,
                                                     Converter={StaticResource plStateToAxisStateConv}}"
-                                        PauseCommand="{Binding PauseCommand}"
-                                        StartCommand="{Binding PlayCommand}"
-                                        StopCommand="{Binding StopCommand}">
+                                        PlayPauseCommand="{Binding ElementName=audioPlayerUserControl, Path=PlayPauseCommand}">
             <i:Interaction.Behaviors>
                 <local:PeriodicBindingUpdateBehavior Interval="0:00:00.250" 
                                                      Property="{x:Static local:SoundTimeAxisUserControl.CurrentTimeProperty}"
