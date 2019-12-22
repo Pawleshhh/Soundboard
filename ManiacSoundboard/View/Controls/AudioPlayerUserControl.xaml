@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ManiacSoundboard.AudioPlayerUserControl"
+﻿<local:BaseAudioPlayerUserControl x:Class="ManiacSoundboard.AudioPlayerUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -119,7 +119,8 @@
         <StackPanel x:Name="buttonsStackPanel" Grid.Row="2 " Grid.Column="2"
                     VerticalAlignment="Center" HorizontalAlignment="Center"
                     Orientation="Horizontal">
-            <ToggleButton x:Name="playPauseButton" Command="{Binding PlayCommand}"
+            <ToggleButton x:Name="playPauseButton" Command="{Binding ElementName=audioPlayerUserControl, Path=PlayPauseCommand}"
+                          CommandParameter="{Binding ElementName=audioPlayerUserControl, Path=DataContext}"
                           PreviewKeyDown="PreventActivatingButtonsByEnterAndSpace"
                           IsChecked="{Binding State, Converter={StaticResource plStateToBoolConv}, Mode=OneWay}">
                 <ToggleButton.Content>
@@ -139,7 +140,8 @@
             </ToggleButton>
 
             <Button x:Name="stopButton" Width="35" Height="35" Margin="10"
-                    Command="{Binding StopCommand}"
+                    Command="{Binding ElementName=audioPlayerUserControl, Path=StopCommand}"
+                    CommandParameter="{Binding ElementName=audioPlayerUserControl, Path=DataContext}"
                     PreviewKeyDown="PreventActivatingButtonsByEnterAndSpace">
                 <Grid>
                     <Ellipse Fill="#ff0000" Width="15" Height="15"
@@ -162,4 +164,4 @@
         </StackPanel>
 
     </Grid>
-</UserControl>
+</local:BaseAudioPlayerUserControl>

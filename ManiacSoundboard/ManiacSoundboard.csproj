@@ -187,14 +187,15 @@
     <Compile Include="View\Controls\AudioPlayerUserControl.xaml.cs">
       <DependentUpon>AudioPlayerUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\Classes only\BaseAudioPlayerUserControl.cs" />
     <Compile Include="View\Controls\KeyBindingUserControl.xaml.cs">
       <DependentUpon>KeyBindingUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\SimpleAudioPlayerUserControl.xaml.cs">
       <DependentUpon>SimpleAudioPlayerUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\SoundAxisState.cs" />
-    <Compile Include="View\Controls\SoundAxisThumb.cs" />
+    <Compile Include="View\Controls\Classes only\SoundAxisState.cs" />
+    <Compile Include="View\Controls\Classes only\SoundAxisThumb.cs" />
     <Compile Include="View\Controls\SoundTimeAxisUserControl.xaml.cs">
       <DependentUpon>SoundTimeAxisUserControl.xaml</DependentUpon>
     </Compile>
@@ -375,5 +376,6 @@
     <Resource Include="Configuration.xml" />
     <Content Include="Helpers\Files\1sec.wav" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

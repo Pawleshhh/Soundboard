@@ -27,15 +27,19 @@
 
         <Style TargetType="{x:Type local:MainWindow}" BasedOn="{StaticResource AppMainWindowStyle}"/>
 
+        <!--=============AudioPlayerDataTemplate=============-->
         <DataTemplate x:Key="DefaultAudioPlayer">
             <local:AudioPlayerUserControl IsEnabled="{Binding ElementName=mainGrid, Path=DataContext.IsNotChangingDevice, Mode=OneWay}" 
+                                          PlayPauseCommand="{Binding ElementName=mainGrid, Path=DataContext.PlayPauseCommand}"
+                                          StopCommand="{Binding ElementName=mainGrid, Path=DataContext.StopCommand}"
                                           Width="425" Height="150"
                                           IsTabStop="True" KeyboardNavigation.TabNavigation="Continue"/>
         </DataTemplate>
 
         <DataTemplate x:Key="SimpleAudioPlayer">
             <local:SimpleAudioPlayerUserControl IsEnabled="{Binding ElementName=mainGrid, Path=DataContext.IsNotChangingDevice, Mode=OneWay}"
-                                                            Width="200" Height="200"/>
+                                                PlayStopCommand="{Binding ElementName=mainGrid, Path=DataContext.PlayStopCommand}"            
+                                                Width="200" Height="200"/>
         </DataTemplate>
 
         <DataTemplate x:Key="AudioPlayerDataTemplate">

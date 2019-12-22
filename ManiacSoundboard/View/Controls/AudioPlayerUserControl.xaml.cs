@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ManiacSoundboard
@@ -6,12 +7,30 @@ namespace ManiacSoundboard
     /// <summary>
     /// Interaction logic for AudioPlayerUserControl.xaml
     /// </summary>
-    public partial class AudioPlayerUserControl : UserControl
+    public partial class AudioPlayerUserControl : BaseAudioPlayerUserControl
     {
         public AudioPlayerUserControl()
         {
             InitializeComponent();
         }
+
+        public ICommand PlayPauseCommand
+        {
+            get { return (ICommand)GetValue(PlayPauseCommandProperty); }
+            set { SetValue(PlayPauseCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty PlayPauseCommandProperty =
+            DependencyProperty.Register("PlayPauseCommand", typeof(ICommand), typeof(AudioPlayerUserControl));
+
+        public ICommand StopCommand
+        {
+            get { return (ICommand)GetValue(StopCommandProperty); }
+            set { SetValue(StopCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty StopCommandProperty =
+            DependencyProperty.Register("StopCommand", typeof(ICommand), typeof(AudioPlayerUserControl));
 
         ///// <summary>
         ///// Contains current time of an audio.

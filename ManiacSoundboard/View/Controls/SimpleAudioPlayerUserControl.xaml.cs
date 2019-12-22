@@ -6,7 +6,7 @@ namespace ManiacSoundboard
     /// <summary>
     /// Interaction logic for SimpleAudioPlayerUserControl.xaml
     /// </summary>
-    public partial class SimpleAudioPlayerUserControl : UserControl
+    public partial class SimpleAudioPlayerUserControl : BaseAudioPlayerUserControl
     {
         public SimpleAudioPlayerUserControl()
         {

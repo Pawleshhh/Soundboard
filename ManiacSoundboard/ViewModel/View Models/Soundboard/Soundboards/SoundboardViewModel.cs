@@ -935,6 +935,76 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+
+        private ICommand playPauseCommand;
+
+        /// <summary>
+        /// Gets command that plays audio or pauses it if it's already playing.
+        /// </summary>
+        public ICommand PlayPauseCommand
+        {
+            get
+            {
+                if (playPauseCommand == null)
+                    playPauseCommand = new RelayCommand(o =>
+                    {
+                        var soundVM = (SoundViewModel)o;
+
+                        if (soundVM.State == PlayerState.Playing)
+                            soundVM.Pause();
+                        else
+                            soundVM.Play();
+                    });
+
+                return playPauseCommand;
+            }
+        }
+
+        private ICommand playStopCommand;
+
+        /// <summary>
+        /// Gets command that plays audio or stops it if it's already playing.
+        /// </summary>
+        public ICommand PlayStopCommand
+        {
+            get
+            {
+                if (playStopCommand == null)
+                    playStopCommand = new RelayCommand(o =>
+                    {
+                        var soundVM = (SoundViewModel)o;
+
+                        if (soundVM.State == PlayerState.Playing)
+                            soundVM.Stop();
+                        else
+                            soundVM.Play();
+                    });
+
+                return playStopCommand;
+            }
+        }
+
+        private ICommand stopCommand;
+
+        /// <summary>
+        /// Gets command that stops audio.
+        /// </summary>
+        public ICommand StopCommand
+        {
+            get
+            {
+                if (stopCommand == null)
+                    stopCommand = new RelayCommand(o =>
+                    {
+                        var soundVM = (SoundViewModel)o;
+                        soundVM.Stop();
+                    });
+
+                return stopCommand;
+            }
+        }
+
+
         #endregion
 
     }
