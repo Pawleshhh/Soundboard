@@ -58,5 +58,12 @@ namespace ManiacSoundboard.ViewModel
             }
         }
 
+        public Soundboard GetConfiguredModel()
+        {
+            AudioOutputApi api = XmlHelper.Get<AudioOutputApi>(AppConfiguration.Configurations["AudioOutputApi"]);
+
+            return SoundboardStaticSimpleFactory.GetSoundboard(api);
+        }
+
     }
 }

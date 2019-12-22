@@ -22,7 +22,7 @@ namespace ManiacSoundboard.ViewModel
 
         public MainViewModel()
         {
-            SoundboardViewModel = SoundboardViewModelConfiguration.ConfigurationService.GetConfiguredViewModel();
+            SoundboardViewModel = SoundboardViewModelSimpleFactory.Factory.GetSoundboardViewModel(AppConfiguration.Configurations["Interaction"]);
         }
 
         #endregion

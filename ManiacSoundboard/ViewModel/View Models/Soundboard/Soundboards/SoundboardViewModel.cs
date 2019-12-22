@@ -28,7 +28,7 @@ namespace ManiacSoundboard.ViewModel
         {
             _messageBoxService = AppServices.MessageBoxService;
             _fileDolderDialogService = AppServices.FileFolderDialogService;
-            _soundboard = SoundboardViewModelConfiguration.ConfigurationService.GetConfiguredModel();
+            _soundboard = SoundboardViewModelSimpleFactory.Factory.GetConfiguredModel();
             _fileFormatInspector = new FileFormatInspector(RecognizableFormats.GetAllFormats());
 
             Initialize();
