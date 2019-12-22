@@ -200,7 +200,7 @@
             <MenuItem x:Name="keyBindingsMenu" Header="Key bindings"
                       Style="{StaticResource SoundboardMenuItemStyle}">
                 <MenuItem x:Name="handleKeysMenuItem" Header="Handle keys" IsCheckable="True"
-                          IsChecked="{Binding IsEnabled, Mode=TwoWay}"
+                          IsChecked="{Binding ElementName=mainGrid, Path=DataContext.HandlesKeyEvents, Mode=TwoWay}"
                           IsEnabled="{Binding IsNotBusy, Mode=OneWay}"/>
             </MenuItem>
             
