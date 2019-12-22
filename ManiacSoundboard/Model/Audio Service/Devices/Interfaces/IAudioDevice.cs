@@ -12,7 +12,7 @@ namespace ManiacSoundboard.Model
         /// <summary>
         /// Gets the number of the device.
         /// </summary>
-        int DeviceId { get; }
+        object DeviceId { get; }
 
         /// <summary>
         /// Gets friendly name of the device.

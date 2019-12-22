@@ -21,7 +21,7 @@ namespace ManiacSoundboard.Model
 
         public string FriendlyName { get; }
 
-        public int DeviceId { get; }
+        public object DeviceId { get; }
 
         public bool Equals(WaveInDevice other)
         {

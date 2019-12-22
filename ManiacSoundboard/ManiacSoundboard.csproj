@@ -145,7 +145,7 @@
     <Compile Include="Model\Audio Service\Devices\EventArgs\DeviceStateChangedEventArgs.cs" />
     <Compile Include="Model\Audio Service\Devices\Interfaces\IAudioDeviceService.cs" />
     <Compile Include="Model\Audio Service\Devices\Interfaces\IDeviceNotification.cs" />
-    <Compile Include="Model\Audio Service\Devices\MMRenderNotificationClient.cs" />
+    <Compile Include="Model\Audio Service\Devices\Notifications\MMRenderNotificationClient.cs" />
     <Compile Include="Model\Audio Service\Players\Interfaces\IPlayer.cs" />
     <Compile Include="Model\Soundboard\Collections\SoundboardCacheCollection.cs" />
     <Compile Include="Model\Soundboard\Interfaces\Soundboard.cs" />
@@ -281,10 +281,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Audio Service\Devices\WaveDevices.cs" />
+    <Compile Include="Model\Audio Service\Devices\Device services\WaveDevices.cs" />
     <Compile Include="Model\Audio Service\Devices\Interfaces\IAudioDevice.cs" />
-    <Compile Include="Model\Audio Service\Devices\WaveInDevice.cs" />
-    <Compile Include="Model\Audio Service\Devices\WaveOutDevice.cs" />
+    <Compile Include="Model\Audio Service\Devices\Device services\Device data\WaveInDevice.cs" />
+    <Compile Include="Model\Audio Service\Devices\Device services\Device data\WaveOutDevice.cs" />
     <Compile Include="Model\Audio Service\Players\WaveEventPlayer.cs" />
     <Compile Include="Model\Binding\CombinationHelper.cs" />
     <Compile Include="ViewModel\Services\IO Service\Global Hook\GlobalKeyEvents.cs" />

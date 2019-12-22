@@ -456,7 +456,7 @@ namespace ManiacSoundboard.Model
                     _firstPlayer.Dispose();
                 }
                 WaveOutEvent waveOut = new WaveOutEvent();
-                waveOut.DeviceNumber = _firstDevice.DeviceId;
+                waveOut.DeviceNumber = (int)_firstDevice.DeviceId;
                 waveOut.PlaybackStopped += Players_PlaybackStopped;
                 _firstPlayer = waveOut;
                 _firstPlayer.Init(_firstWaveChannel);
@@ -474,7 +474,7 @@ namespace ManiacSoundboard.Model
                 }
 
                 WaveOutEvent waveOut = new WaveOutEvent();
-                waveOut.DeviceNumber = _secondDevice.DeviceId;
+                waveOut.DeviceNumber = (int)_secondDevice.DeviceId;
                 waveOut.PlaybackStopped += Players_PlaybackStopped;
                 _secondPlayer = waveOut;
                 _secondPlayer.Init(_secondWaveChannel);

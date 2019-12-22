@@ -592,7 +592,18 @@ namespace ManiacSoundboard.ViewModel
         /// </summary>
         private void Client_DevicesChanged(object sender, EventArgs e)
         {
-            ReloadDevices();
+            try
+            {
+                ReloadDevices();
+            }
+            catch
+            {
+                var result = _messageBoxService.ShowMessageBoxDecision("System audio devices changed and it caused an error. Do you want to reaload devices again?", 
+                    "Error when devices changed", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                    
+                if(result == MessageBoxResult.Yes)
+                    ReloadDevices();
+            }
         }
 
         #region Xml

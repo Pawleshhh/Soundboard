@@ -103,11 +103,6 @@ namespace ManiacSoundboard.Model
             {
                 firstDevice = value;
 
-                allPlayers.ForEach(sound =>
-                {
-                    sound.FirstDevice = value;
-                });
-
                 _InitializeFirstDevice();
             }
         }
@@ -120,11 +115,6 @@ namespace ManiacSoundboard.Model
             set
             {
                 secondDevice = value;
-
-                allPlayers.ForEach(sound =>
-                {
-                    sound.SecondDevice = value;
-                });
 
                 _InitializeSecondDevice();
             }
@@ -223,12 +213,17 @@ namespace ManiacSoundboard.Model
         {
             lock(_firstDeviceLocker)
             {
+                allPlayers.ForEach(sound =>
+                {
+                    sound.FirstDevice = FirstDevice;
+                });
+
                 if (FirstDevice != null)
                 {
                     _firstDevice?.Dispose();
                     _firstDevice = new WaveOutEvent
                     {
-                        DeviceNumber = FirstDevice.DeviceId
+                        DeviceNumber = (int)FirstDevice.DeviceId
                     };
 
                     _firstDevice.Init(_blankWav);
@@ -241,12 +236,17 @@ namespace ManiacSoundboard.Model
         {
             lock(_secondDeviceLocker)
             {
+                allPlayers.ForEach(sound =>
+                {
+                    sound.SecondDevice = SecondDevice;
+                });
+
                 if (SecondDevice != null)
                 {
                     _secondDevice?.Dispose();
                     _secondDevice = new WaveOutEvent
                     {
-                        DeviceNumber = SecondDevice.DeviceId
+                        DeviceNumber = (int)SecondDevice.DeviceId
                     };
 
                     _secondDevice.Init(_blankWav);
