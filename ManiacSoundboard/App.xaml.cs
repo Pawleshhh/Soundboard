@@ -64,10 +64,10 @@ namespace ManiacSoundboard
             catch (Exception ex)
             {
                 var result = vm.AppServices.MessageBoxService.ShowMessageBoxDecision("Some problem occurred when application was starting to run. Do you want to see the details?",
-                                                                        "Problem with starting.", vm.MessageBoxButton.YesNo, vm.MessageBoxImage.Error);
+                                                                        "Problem with startup.", vm.MessageBoxButton.YesNo, vm.MessageBoxImage.Error);
 
                 if (result == vm.MessageBoxResult.Yes)
-                    vm.AppServices.MessageBoxService.ShowMessageBox(ex.Message, "Details", vm.MessageBoxImage.Information);
+                    vm.AppServices.MessageBoxService.ShowMessageBox(ex.Message, "Error details", vm.MessageBoxImage.Information);
 
                 _mainViewModel?.Dispose();
 

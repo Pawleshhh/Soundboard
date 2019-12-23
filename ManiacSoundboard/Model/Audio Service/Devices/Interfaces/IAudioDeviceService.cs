@@ -43,5 +43,11 @@ namespace ManiacSoundboard.Model
         /// </summary>
         void ReloadInDevices();
 
+        /// <summary>
+        /// Checks whether the given device exists, is available or not.
+        /// </summary>
+        /// <param name="device">Device to be checked.</param>
+        bool DeviceExists(IAudioDevice device);
+
     }
 }

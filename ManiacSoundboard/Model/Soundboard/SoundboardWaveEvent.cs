@@ -190,6 +190,17 @@ namespace ManiacSoundboard.Model
             return new WaveDevices();
         }
 
+        //public override bool DeviceExists(IAudioDevice device)
+        //{
+        //    if(device != null && device is WaveOutDevice)
+        //    {
+        //        int id = (int)device.DeviceId;
+        //        return id >= -1 && id < WaveOut.DeviceCount;
+        //    }
+
+        //    return false;
+        //}
+
         public override void Dispose()
         {
             if (_disposed) return;

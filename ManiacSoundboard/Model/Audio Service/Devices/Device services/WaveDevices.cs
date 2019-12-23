@@ -21,8 +21,8 @@ namespace ManiacSoundboard.Model
         public WaveDevices()
         {
             _enumerator = new MMDeviceEnumerator();
-            Notifications = new MMRenderNotificationClient();
-            RegisterEndpointNotificationCallback((MMRenderNotificationClient)Notifications);
+            //Notifications = new MMRenderNotificationClient();
+            //RegisterEndpointNotificationCallback((MMRenderNotificationClient)Notifications);
         }
 
         #endregion
@@ -38,7 +38,7 @@ namespace ManiacSoundboard.Model
         /// <summary>
         /// Gets object that notifies if devices changed.
         /// </summary>
-        public IDeviceNotification Notifications { get; private set; }
+        public IDeviceNotification Notifications => throw new NotImplementedException("Notifications are not used.");
 
         /// <summary>
         /// Gets collection of stored in (capture) audio devices.
@@ -110,64 +110,110 @@ namespace ManiacSoundboard.Model
             InDevices = _GetWaveInDevices();
         }
 
+        /// <summary>
+        /// Checks whether the given device exists, is available or not.
+        /// </summary>
+        /// <param name="device">Device to be checked.</param>
+        public bool DeviceExists(IAudioDevice device)
+        {
+            if (device == null) return false;
+
+            MMDeviceCollection mmDeviceCollection;
+
+            if (device is WaveOutDevice)
+            {
+                mmDeviceCollection = _enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+            }
+            else if (device is WaveInDevice)
+            {
+                mmDeviceCollection = _enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active);
+            }
+            else return false;
+
+
+            foreach(var mmDevice in mmDeviceCollection)
+            {
+                if (device.FriendlyName.StartsWith(mmDevice.FriendlyName))
+                    return true;
+            }
+
+
+            return false;
+        }
+
         public void Dispose()
         {
-            if (Notifications != null)
-            {
-                UnRegisterEndpointNotificationCallback((MMRenderNotificationClient)Notifications);
-            }
+            _enumerator.Dispose();
+            //if (Notifications != null)
+            //{
+            //    UnRegisterEndpointNotificationCallback((MMRenderNotificationClient)Notifications);
+            //}
         }
 
         private WaveOutDevice[] _GetWaveOutDevices()
         {
-            int outDevicesCount = WaveOut.DeviceCount;
-            MMDeviceCollection mmDeviceCollection = _enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.All);
-
-            WaveOutDevice[] waveOutDevices = new WaveOutDevice[outDevicesCount];
-
-            for (int outDevice = 0; outDevice < outDevicesCount; outDevice++)
+            try
             {
-                var capabilities = WaveOut.GetCapabilities(outDevice);
-                //waveOutDevices[outDevice] = new WaveOutDevice(capabilities, outDevice);
+                int outDevicesCount = WaveOut.DeviceCount;
+                MMDeviceCollection mmDeviceCollection = _enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
 
-                //Getting full names of the devices.
-                foreach (MMDevice device in mmDeviceCollection)
+                WaveOutDevice[] waveOutDevices = new WaveOutDevice[outDevicesCount];
+
+                for (int outDevice = 0; outDevice < outDevicesCount; outDevice++)
                 {
-                    if (device.FriendlyName.StartsWith(capabilities.ProductName))
+                    var capabilities = WaveOut.GetCapabilities(outDevice);
+                    //waveOutDevices[outDevice] = new WaveOutDevice(capabilities, outDevice);
+
+                    //Getting full names of the devices.
+                    foreach (MMDevice device in mmDeviceCollection)
                     {
-                        waveOutDevices[outDevice] = new WaveOutDevice(capabilities, outDevice, device.FriendlyName);
-                        break;
+                        if (device.FriendlyName.StartsWith(capabilities.ProductName))
+                        {
+                            waveOutDevices[outDevice] = new WaveOutDevice(capabilities, outDevice, device.FriendlyName);
+                            break;
+                        }
                     }
                 }
-            }
 
-            return waveOutDevices;
+                return waveOutDevices;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(string.Format("Error occurred when getting wave out devices. {0}", ex.Message), ex);
+            }
         }
 
         private WaveInDevice[] _GetWaveInDevices()
         {
-            int inDevicesCount = WaveIn.DeviceCount;
-            MMDeviceCollection mmDeviceCollection = _enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.All);
-
-            WaveInDevice[] waveInDevices = new WaveInDevice[inDevicesCount];
-
-            for (int inDevice = 0; inDevice < inDevicesCount; inDevice++)
+            try
             {
-                var capabilities = WaveIn.GetCapabilities(inDevice);
-                //waveInDevices[inDevice] = new WaveInDevice(capabilities, inDevice);
+                int inDevicesCount = WaveIn.DeviceCount;
+                MMDeviceCollection mmDeviceCollection = _enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active);
 
-                //Getting full names of the devices.
-                foreach (MMDevice device in mmDeviceCollection)
+                WaveInDevice[] waveInDevices = new WaveInDevice[inDevicesCount];
+
+                for (int inDevice = 0; inDevice < inDevicesCount; inDevice++)
                 {
-                    if (device.FriendlyName.StartsWith(capabilities.ProductName))
+                    var capabilities = WaveIn.GetCapabilities(inDevice);
+                    //waveInDevices[inDevice] = new WaveInDevice(capabilities, inDevice);
+
+                    //Getting full names of the devices.
+                    foreach (MMDevice device in mmDeviceCollection)
                     {
-                        waveInDevices[inDevice] = new WaveInDevice(capabilities, inDevice, device.FriendlyName);
-                        break;
+                        if (device.FriendlyName.StartsWith(capabilities.ProductName))
+                        {
+                            waveInDevices[inDevice] = new WaveInDevice(capabilities, inDevice, device.FriendlyName);
+                            break;
+                        }
                     }
                 }
-            }
 
-            return waveInDevices;
+                return waveInDevices;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(string.Format("Error occurred when getting wave in devices. {0}", ex.Message), ex);
+            }
         }
 
         /// <summary>

@@ -231,6 +231,12 @@ namespace ManiacSoundboard.Model
         /// </summary>
         public abstract IAudioDeviceService GetDeviceService();
 
+        ///// <summary>
+        ///// Checks whether given device exists (is available) or not.
+        ///// </summary>
+        ///// <param name="device">Device to be checked.</param>
+        //public abstract bool DeviceExists(IAudioDevice device);
+
         public abstract void Dispose();
 
         #endregion

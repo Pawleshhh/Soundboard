@@ -1,5 +1,6 @@
 ﻿using FileSignatures;
 using ManiacSoundboard.Model;
+using NAudio;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,10 +49,10 @@ namespace ManiacSoundboard.ViewModel
         {
             Sounds = new NotifyTaskCompletion<ObservableCollection<SoundViewModel>>(Task.FromResult(new ObservableCollection<SoundViewModel>()));
 
-            _soundboard.AudioDevices.Notifications.DefaultDeviceChaned += Client_DevicesChanged;
-            _soundboard.AudioDevices.Notifications.DeviceAdded += Client_DevicesChanged;
-            _soundboard.AudioDevices.Notifications.DeviceRemoved += Client_DevicesChanged;
-            _soundboard.AudioDevices.Notifications.DeviceStateChanged += Client_DevicesChanged;
+            //_soundboard.AudioDevices.Notifications.DefaultDeviceChaned += Client_DevicesChanged;
+            //_soundboard.AudioDevices.Notifications.DeviceAdded += Client_DevicesChanged;
+            //_soundboard.AudioDevices.Notifications.DeviceRemoved += Client_DevicesChanged;
+            //_soundboard.AudioDevices.Notifications.DeviceStateChanged += Client_DevicesChanged;
             _ReloadDevices();
         }
 
@@ -312,6 +313,13 @@ namespace ManiacSoundboard.ViewModel
         public async void SetFirstDevice(IAudioDevice device)
         {
             StopAll();
+
+            if (!CheckIfDeviceExists(device))
+            {
+                OnPropertyChanged("FirstDevice");
+                return;
+            }
+
             IsChangingDevice = true;
             await Task.Run(() => _soundboard.FirstDevice = device);
             IsChangingDevice = false;
@@ -325,6 +333,13 @@ namespace ManiacSoundboard.ViewModel
         public async void SetSecondDevice(IAudioDevice device)
         {
             StopAll();
+
+            if (!CheckIfDeviceExists(device))
+            {
+                OnPropertyChanged("SecondDevice");
+                return;
+            }
+
             IsChangingDevice = true;
             await Task.Run(() => _soundboard.SecondDevice = device);
             IsChangingDevice = false;
@@ -543,6 +558,21 @@ namespace ManiacSoundboard.ViewModel
         }
 
         /// <summary>
+        /// Checks whether given device exists or not.
+        /// </summary>
+        /// <param name="device">Device to be checked.</param>
+        protected bool CheckIfDeviceExists(IAudioDevice device)
+        {
+            if (_soundboard.AudioDevices.DeviceExists(device)) return true;
+
+            _messageBoxService.ShowMessageBox($"{device.FriendlyName} could not be open", "Device could not be open", MessageBoxImage.Warning);
+
+            ReloadDevices();
+
+            return false;
+        }
+
+        /// <summary>
         /// Checks if file exists and if not then informs user about it by message box.
         /// </summary>
         /// <returns></returns>
@@ -596,7 +626,7 @@ namespace ManiacSoundboard.ViewModel
             {
                 ReloadDevices();
             }
-            catch
+            catch(MmException)
             {
                 var result = _messageBoxService.ShowMessageBoxDecision("System audio devices changed and it caused an error. Do you want to reaload devices again?", 
                     "Error when devices changed", MessageBoxButton.YesNo, MessageBoxImage.Error);

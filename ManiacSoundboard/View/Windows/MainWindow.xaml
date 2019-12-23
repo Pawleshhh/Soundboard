@@ -409,7 +409,7 @@
         <!--=============Main content=============-->
         <Grid x:Name="mainContentGrid" Grid.Row="2">
             <ListView x:Name="soundboardListView" ItemsSource="{Binding Sounds.Result}"
-                      AllowDrop="True" Drop="soundboardListView_Drop"
+                      AllowDrop="True" Drop="soundboardListView_Drop" VirtualizingPanel.IsVirtualizing="True"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemTemplate="{DynamicResource AudioPlayerDataTemplate}">
                 <ListView.Style>
                     <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource SounboardListViewStyle}">
